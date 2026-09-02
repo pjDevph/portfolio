@@ -165,21 +165,24 @@ export function SelectedWork() {
           <h2 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Production systems, not demo projects.</h2>
           <p className="max-w-xl text-sm leading-6 text-muted-bright lg:text-right">Each project highlights the operating problem, system boundaries, and engineering decisions—not just the framework list.</p>
         </div>
-        <div className="mt-14 space-y-6 sm:mt-16">
+        <div className="mt-14 space-y-16 sm:mt-16 sm:space-y-[4.5rem]">
           {featured.map((p, i) => {
             const isFeatured = i === 0;
             const textBlock = (
-              <div className="flex flex-col justify-center p-7 sm:p-9 lg:h-full lg:p-10 xl:p-11">
+              <div className="flex flex-col justify-center p-7 sm:p-9 lg:h-full lg:p-12 xl:p-14">
                 <div className="font-mono text-xs tracking-[.16em] text-cyan">{p.index} / {p.eyebrow}</div>
                 <h3 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{p.name}</h3>
                 <p className="mt-4 max-w-2xl leading-7 text-muted-bright">{p.summary}</p>
                 {p.ownership && (
-                  <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
-                    {p.ownership.map((o) => (
-                      <div key={o} className="flex items-baseline gap-2 text-sm text-muted-bright">
-                        <span className="text-dim">↳</span>{o}
-                      </div>
-                    ))}
+                  <div className="mt-6">
+                    <div className="font-mono text-[10px] uppercase tracking-[.18em] text-dim">My ownership</div>
+                    <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
+                      {p.ownership.map((o) => (
+                        <div key={o} className="flex items-baseline gap-2 text-sm text-muted-bright">
+                          <span className="text-dim">↳</span>{o}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
                 <div className="mt-8">
@@ -189,18 +192,15 @@ export function SelectedWork() {
             );
             const visual = <HomeCardVisual slug={p.slug} className="lg:h-full" />;
             return (
-              <article key={p.slug} className={`group overflow-hidden rounded-2xl border border-line/60 bg-panel shadow-soft transition duration-300 hover:-translate-y-1 hover:border-slate-500/60`}>
+              <article key={p.slug} className="group overflow-hidden rounded-2xl border border-line/60 bg-panel shadow-soft transition duration-300 hover:-translate-y-1 hover:border-slate-500/60">
                 {isFeatured && (
                   <div className="border-b border-line/60 bg-cyan/5 px-7 py-2.5 font-mono text-[10px] uppercase tracking-[.18em] text-cyan sm:px-9 lg:px-10">
                     Featured case study
                   </div>
                 )}
-                <div className={`grid lg:h-[580px] ${isFeatured ? "lg:grid-cols-[1.5fr_1fr]" : "lg:grid-cols-[1fr_1.5fr]"}`}>
-                  {isFeatured ? (
-                    <>{visual}{textBlock}</>
-                  ) : (
-                    <>{textBlock}{visual}</>
-                  )}
+                <div className={`grid lg:grid-cols-[1fr_1.5fr] ${isFeatured ? "lg:h-[620px]" : "lg:h-[580px]"}`}>
+                  {textBlock}
+                  {visual}
                 </div>
               </article>
             );
