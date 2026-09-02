@@ -144,7 +144,7 @@ function ShotFrame({ src, alt, caption, ratio = "aspect-[4/3]" }: { src: string;
 
 function SubNav() {
   return (
-    <div className="sticky top-16 z-40 border-b border-white/5 bg-ink/92 backdrop-blur-xl">
+    <div className="sticky top-16 z-40 border-b border-white/5 bg-ink">
       <Container className="scrollbar-none flex gap-2 overflow-x-auto py-3">
         {SUBNAV.map(([id, label]) => (
           <a key={id} href={`#${id}`} className="subnav-link">{label}</a>

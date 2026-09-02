@@ -1,5 +1,7 @@
 import { Container, Header, Footer, SectionLabel } from "@/components/site";
-import { ProductComposition } from "@/components/poster-placeholder";
+import { ProjectPoster } from "@/components/poster-placeholder";
+import { ProductCarousel } from "@/components/product-carousel";
+import { LALABA_SLIDES } from "@/data/lalaba-slides";
 import type { Project } from "@/data/projects";
 import Link from "next/link";
 import Image from "next/image";
@@ -27,6 +29,7 @@ const REPOS = [
 
 const SUBNAV = [
   ["overview", "Overview"],
+  ["ecosystem", "Ecosystem"],
   ["product", "Product"],
   ["preview", "Admin Preview"],
   ["architecture", "Architecture"],
@@ -143,7 +146,7 @@ const PAYMENT_FLOW = [
 
 function SubNav() {
   return (
-    <div className="sticky top-16 z-40 border-b border-white/5 bg-ink/92 backdrop-blur-xl">
+    <div className="sticky top-16 z-40 border-b border-white/5 bg-ink">
       <Container className="scrollbar-none flex gap-2 overflow-x-auto py-3">
         {SUBNAV.map(([id, label]) => (
           <a key={id} href={`#${id}`} className="subnav-link">{label}</a>
@@ -163,30 +166,29 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
             <Link href="/#work" className="inline-flex items-center gap-2 text-sm text-muted hover:text-text">
               <ArrowLeft size={15} />Back to work
             </Link>
-            <div className="mt-12 max-w-5xl">
-              <div className="font-mono text-xs tracking-[.16em] text-cyan">{project.index} / {project.eyebrow}</div>
-              <h1 className="mt-4 text-5xl font-bold tracking-tight sm:text-7xl">{project.name}</h1>
-              <p className="mt-6 max-w-3xl text-xl leading-8 text-muted">{project.summary}</p>
+            <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
+              <div>
+                <div className="font-mono text-xs tracking-[.16em] text-cyan">{project.index} / {project.eyebrow}</div>
+                <h1 className="mt-4 text-5xl font-bold tracking-tight sm:text-6xl">{project.name}</h1>
+                <p className="mt-6 max-w-xl text-xl leading-8 text-muted">{project.summary}</p>
 
-              <div className="mt-7 flex flex-wrap gap-3">
-                <a href={REPOS[0].url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-text px-4 py-2.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5">
-                  <Github size={15} />View on GitHub
-                </a>
-                <span className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm text-muted">
-                  <Users size={14} />Built with a small engineering team
-                </span>
-                <a href="#architecture" className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm text-muted transition hover:border-cyan/70 hover:text-cyan">
-                  Jump to architecture
-                </a>
-              </div>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <a href={REPOS[0].url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-text px-4 py-2.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5">
+                    <Github size={15} />View on GitHub
+                  </a>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm text-muted">
+                    <Users size={14} />Built with a small engineering team
+                  </span>
+                </div>
 
-              <div className="mt-8 grid gap-5 border-y border-line py-6 sm:grid-cols-3">
-                <div><div className="font-mono text-xs text-dim">ROLE</div><div className="mt-1">{project.role}</div></div>
-                <div><div className="font-mono text-xs text-dim">PERIOD</div><div className="mt-1">{project.period}</div></div>
-                <div><div className="font-mono text-xs text-dim">PLATFORM</div><div className="mt-1">Web · Mobile · Backend</div></div>
+                <div className="mt-8 grid gap-5 border-y border-line py-6 sm:grid-cols-3">
+                  <div><div className="font-mono text-xs text-dim">ROLE</div><div className="mt-1">{project.role}</div></div>
+                  <div><div className="font-mono text-xs text-dim">PERIOD</div><div className="mt-1">{project.period}</div></div>
+                  <div><div className="font-mono text-xs text-dim">PLATFORM</div><div className="mt-1">Web · Mobile · Backend</div></div>
+                </div>
               </div>
+              <ProjectPoster slug="lalaba" name={project.name} className="rounded-2xl border border-line" />
             </div>
-            <ProductComposition slug="lalaba" name={project.name} className="mt-10 overflow-hidden rounded-2xl border border-line" />
           </Container>
         </section>
 
@@ -209,6 +211,18 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
                 </div>
               ))}
             </div>
+          </Container>
+        </section>
+
+        <section id="ecosystem" className="section-anchor border-y border-white/5 bg-panel/40 py-20">
+          <Container>
+            <SectionLabel>Product ecosystem</SectionLabel>
+            <h2 className="text-3xl font-bold">Customer App · Partner App · Admin Panel</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-bright">
+              Three different human roles, one platform. The active screenshot below rotates automatically —
+              click a thumbnail to jump to it.
+            </p>
+            <ProductCarousel slides={LALABA_SLIDES} fit="contain" autoplaySeconds={6} className="mx-auto mt-8 max-w-4xl" />
           </Container>
         </section>
 
@@ -256,20 +270,9 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
         <section id="product" className="border-y border-white/5 bg-panel/40 py-20">
           <Container>
             <SectionLabel>Product surfaces</SectionLabel>
-            <h2 className="text-3xl font-bold">An ecosystem, not a single app</h2>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-bright">Three different human roles, one platform — customers booking pickups, providers managing their business, and staff running operations.</p>
-            <div className="mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-2">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-line bg-panel">
-                <Image src="/projects/lalaba/customer-app.jpg" alt="Lalaba customer app" fill className="object-cover" sizes="(min-width: 1024px) 30vw, 50vw" />
-              </div>
-              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-line bg-panel">
-                <Image src="/projects/lalaba/partner-app.jpg" alt="Lalaba partner app" fill className="object-cover" sizes="(min-width: 1024px) 30vw, 50vw" />
-              </div>
-              <div className="relative col-span-2 aspect-[16/7] overflow-hidden rounded-2xl border border-line bg-panel">
-                <Image src="/projects/lalaba/admin-panel.jpg" alt="Lalaba admin panel" fill className="object-cover" sizes="(min-width: 1024px) 60vw, 100vw" />
-              </div>
-            </div>
-            <div className="mt-10 grid gap-5 md:grid-cols-2">
+            <h2 className="text-3xl font-bold">Five repos, one backend</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-bright">Each surface in detail — see the ecosystem carousel above for the three primary product surfaces at a glance.</p>
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
               {PRODUCT_SURFACES.map((s) => (
                 <div key={s.name} className="overflow-hidden rounded-2xl border border-line bg-panel">
                   {s.image && (

@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { projects } from "@/data/projects";
 import { HomeCardVisual } from "@/components/poster-placeholder";
+import { ProductCarousel } from "@/components/product-carousel";
+import { LALABA_SLIDES } from "@/data/lalaba-slides";
 
 export const Container = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <div className={`mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10 ${className}`}>{children}</div>
@@ -190,7 +192,13 @@ export function SelectedWork() {
                 </div>
               </div>
             );
-            const visual = <HomeCardVisual slug={p.slug} className="lg:h-full" />;
+            const visual = p.slug === "lalaba" ? (
+              <div className="flex items-center bg-panel2/40 p-4 sm:p-6 lg:h-full">
+                <ProductCarousel slides={LALABA_SLIDES} compact autoplaySeconds={5} className="w-full" />
+              </div>
+            ) : (
+              <HomeCardVisual slug={p.slug} className="lg:h-full" />
+            );
             return (
               <article key={p.slug} className="group overflow-hidden rounded-2xl border border-line/60 bg-panel shadow-soft transition duration-300 hover:-translate-y-1 hover:border-slate-500/60">
                 {isFeatured && (
