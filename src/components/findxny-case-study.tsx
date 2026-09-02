@@ -1,5 +1,5 @@
 import { Container, Header, Footer, SectionLabel } from "@/components/site";
-import { ProjectPoster } from "@/components/poster-placeholder";
+import { ProductComposition } from "@/components/poster-placeholder";
 import type { Project } from "@/data/projects";
 import Link from "next/link";
 import Image from "next/image";
@@ -187,7 +187,7 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
                 <div><div className="font-mono text-xs text-dim">PLATFORM</div><div className="mt-1">Web · POS · Backend · Hardware</div></div>
               </div>
             </div>
-            <ProjectPoster slug="findxny-os" name={project.name} className="mt-10" />
+            <ProductComposition slug="findxny-os" name={project.name} className="mt-10 overflow-hidden rounded-2xl border border-line" />
           </Container>
         </section>
 
@@ -544,6 +544,19 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
                 <p className="mt-2 text-sm leading-6 text-muted-bright">As {project.role.toLowerCase()} ({project.period}), I worked across the offline sync layer, tenant/role access model, payment webhooks, and POS hardware integrations described above.</p>
               </div>
             </div>
+          </Container>
+        </section>
+
+        <section className="border-t border-white/5 py-16">
+          <Container>
+            <Link href="/projects/lalaba" className="group flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
+              <div>
+                <div className="font-mono text-xs uppercase tracking-[.18em] text-dim">Next case study</div>
+                <div className="mt-2 text-2xl font-bold sm:text-3xl">Lalaba</div>
+                <p className="mt-1 text-sm text-muted-bright">Multi-role marketplace infrastructure across customer, partner, and admin surfaces.</p>
+              </div>
+              <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-cyan transition group-hover:gap-3">View Lalaba <ArrowUpRight size={16} /></span>
+            </Link>
           </Container>
         </section>
       </main>

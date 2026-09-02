@@ -1,10 +1,11 @@
 import { Container, Header, Footer, SectionLabel } from "@/components/site";
-import { ProjectPoster } from "@/components/poster-placeholder";
+import { ProductComposition } from "@/components/poster-placeholder";
 import type { Project } from "@/data/projects";
 import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowLeft,
+  ArrowUpRight,
   ExternalLink,
   Github,
   Monitor,
@@ -185,7 +186,7 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
                 <div><div className="font-mono text-xs text-dim">PLATFORM</div><div className="mt-1">Web · Mobile · Backend</div></div>
               </div>
             </div>
-            <ProjectPoster slug="lalaba" name={project.name} className="mt-10" />
+            <ProductComposition slug="lalaba" name={project.name} className="mt-10 overflow-hidden rounded-2xl border border-line" />
           </Container>
         </section>
 
@@ -256,16 +257,17 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
           <Container>
             <SectionLabel>Product surfaces</SectionLabel>
             <h2 className="text-3xl font-bold">An ecosystem, not a single app</h2>
-            <div className="mt-8 flex flex-col items-center">
-              <div className="grid w-full max-w-lg grid-cols-3 gap-3">
-                <div className="arch-node">Customer</div>
-                <div className="arch-node">Partner</div>
-                <div className="arch-node">Admin</div>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-bright">Three different human roles, one platform — customers booking pickups, providers managing their business, and staff running operations.</p>
+            <div className="mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-2">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-line bg-panel">
+                <Image src="/projects/lalaba/customer-app.jpg" alt="Lalaba customer app" fill className="object-cover" sizes="(min-width: 1024px) 30vw, 50vw" />
               </div>
-              <span className="flow-connector my-1" />
-              <div className="arch-node cyan w-full max-w-xs text-center">Lalaba — NestJS / GraphQL</div>
-              <span className="flow-connector my-1" />
-              <div className="arch-node w-full max-w-xs text-center">MongoDB + Redis</div>
+              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-line bg-panel">
+                <Image src="/projects/lalaba/partner-app.jpg" alt="Lalaba partner app" fill className="object-cover" sizes="(min-width: 1024px) 30vw, 50vw" />
+              </div>
+              <div className="relative col-span-2 aspect-[16/7] overflow-hidden rounded-2xl border border-line bg-panel">
+                <Image src="/projects/lalaba/admin-panel.jpg" alt="Lalaba admin panel" fill className="object-cover" sizes="(min-width: 1024px) 60vw, 100vw" />
+              </div>
             </div>
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {PRODUCT_SURFACES.map((s) => (
@@ -458,6 +460,19 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
                 <p className="mt-2 text-sm leading-6 text-muted-bright">Built collaboratively with a small engineering team, not solo. In active development — no public production deployment yet.</p>
               </div>
             </div>
+          </Container>
+        </section>
+
+        <section className="border-t border-white/5 py-16">
+          <Container>
+            <Link href="/projects/findxny-os" className="group flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
+              <div>
+                <div className="font-mono text-xs uppercase tracking-[.18em] text-dim">Featured project</div>
+                <div className="mt-2 text-2xl font-bold sm:text-3xl">FINDXNY OS</div>
+                <p className="mt-1 text-sm text-muted-bright">Multi-tenant POS and booking infrastructure — offline POS, payments, hardware.</p>
+              </div>
+              <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-cyan transition group-hover:gap-3">View FINDXNY <ArrowUpRight size={16} /></span>
+            </Link>
           </Container>
         </section>
       </main>
