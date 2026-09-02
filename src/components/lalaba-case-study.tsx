@@ -276,8 +276,8 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
               {PRODUCT_SURFACES.map((s) => (
                 <div key={s.name} className="overflow-hidden rounded-2xl border border-line bg-panel">
                   {s.image && (
-                    <div className="relative aspect-[16/9] w-full border-b border-line">
-                      <Image src={s.image} alt={`${s.name} preview`} fill className="object-cover" sizes="(min-width: 768px) 50vw, 100vw" />
+                    <div className="relative aspect-[16/9] w-full border-b border-line bg-ink">
+                      <Image src={s.image} alt={`${s.name} preview`} fill className="object-contain" sizes="(min-width: 768px) 50vw, 100vw" />
                     </div>
                   )}
                   <div className="p-6">

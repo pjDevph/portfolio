@@ -93,24 +93,5 @@ export function HomeCardVisual({ slug, className = "" }: { slug: string; classNa
       </div>
     );
   }
-  if (slug === "lalaba") {
-    return (
-      <div className={`relative h-full min-h-[320px] overflow-hidden bg-panel ${className}`}>
-        <Image src="/projects/lalaba/admin-panel.jpg" alt="Lalaba admin panel" fill className="object-cover" sizes="(min-width: 1024px) 55vw, 100vw" />
-        <div className="absolute bottom-4 left-4 flex gap-2">
-          <div className="w-20 overflow-hidden rounded-lg border border-white/15 shadow-soft sm:w-24">
-            <div className="relative aspect-[4/5]">
-              <Image src="/projects/lalaba/customer-app.jpg" alt="Lalaba customer app" fill className="object-cover" sizes="96px" />
-            </div>
-          </div>
-          <div className="w-20 overflow-hidden rounded-lg border border-white/15 shadow-soft sm:w-24">
-            <div className="relative aspect-[4/5]">
-              <Image src="/projects/lalaba/partner-app.jpg" alt="Lalaba partner app" fill className="object-cover" sizes="96px" />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
   return <ProjectPoster slug={slug} name={slug} className={`h-full min-h-[320px] ${className}`} rounded={false} />;
 }

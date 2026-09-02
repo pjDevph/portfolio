@@ -13,7 +13,7 @@ export type CarouselSlide = {
 export function ProductCarousel({
   slides,
   autoplaySeconds = 5,
-  fit = "cover",
+  fit = "contain",
   compact = false,
   className = "",
 }: {
@@ -83,7 +83,7 @@ export function ProductCarousel({
             onClick={() => selectSlide(i)}
             className={`relative overflow-hidden rounded-lg border transition ${compact ? "aspect-[8/5]" : "aspect-[16/9]"} ${i === active ? "border-cyan/70" : "border-line hover:border-slate-500/60"}`}
           >
-            <Image src={s.src} alt={s.alt} fill className="object-cover" sizes="200px" />
+            <Image src={s.src} alt={s.alt} fill className={fit === "contain" ? "object-contain" : "object-cover"} sizes="200px" />
             {i !== active && <div className="absolute inset-0 bg-ink/40" />}
             {!compact && (
               <span className="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-[.12em] text-white/90">{s.label}</span>
