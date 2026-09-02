@@ -33,10 +33,10 @@ export function ProjectPoster({ slug, name, className = "", rounded = true }: Po
 }
 
 /**
- * Real multi-screenshot composition for a project, used on the homepage
- * cards in place of a single poster — shows actual product surfaces
- * instead of one marketing shot. Falls back to ProjectPoster for any
- * slug without a defined composition.
+ * Real multi-screenshot composition for a project, used on case-study
+ * hero sections in place of a single poster — shows actual product
+ * surfaces instead of one marketing shot. Falls back to ProjectPoster
+ * for any slug without a defined composition.
  */
 export function ProductComposition({ slug, name, className = "" }: PosterProps) {
   if (slug === "findxny-os") {
@@ -72,4 +72,45 @@ export function ProductComposition({ slug, name, className = "" }: PosterProps) 
     );
   }
   return <ProjectPoster slug={slug} name={name} className={className} rounded={false} />;
+}
+
+/**
+ * Homepage "Selected work" card artwork — one dominant screenshot with a
+ * smaller screenshot overlapping it as a floating card, instead of a grid
+ * of equal-weight tiles or one oversized single image. Height is driven
+ * by the parent grid (h-full), not by the source image's native ratio.
+ */
+export function HomeCardVisual({ slug, className = "" }: { slug: string; className?: string }) {
+  if (slug === "findxny-os") {
+    return (
+      <div className={`relative h-full min-h-[320px] overflow-hidden bg-panel ${className}`}>
+        <Image src="/projects/findxny-os/pos-order-offline.jpg" alt="FINDXNY OS POS order entry, offline mode" fill className="object-cover" sizes="(min-width: 1024px) 55vw, 100vw" />
+        <div className="absolute bottom-4 right-4 w-[42%] max-w-[220px] overflow-hidden rounded-xl border border-white/15 shadow-soft">
+          <div className="relative aspect-[8/5]">
+            <Image src="/projects/findxny-os/pos-dashboard.jpg" alt="FINDXNY OS owner dashboard" fill className="object-cover" sizes="220px" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (slug === "lalaba") {
+    return (
+      <div className={`relative h-full min-h-[320px] overflow-hidden bg-panel ${className}`}>
+        <Image src="/projects/lalaba/admin-panel.jpg" alt="Lalaba admin panel" fill className="object-cover" sizes="(min-width: 1024px) 55vw, 100vw" />
+        <div className="absolute bottom-4 left-4 flex gap-2">
+          <div className="w-20 overflow-hidden rounded-lg border border-white/15 shadow-soft sm:w-24">
+            <div className="relative aspect-[4/5]">
+              <Image src="/projects/lalaba/customer-app.jpg" alt="Lalaba customer app" fill className="object-cover" sizes="96px" />
+            </div>
+          </div>
+          <div className="w-20 overflow-hidden rounded-lg border border-white/15 shadow-soft sm:w-24">
+            <div className="relative aspect-[4/5]">
+              <Image src="/projects/lalaba/partner-app.jpg" alt="Lalaba partner app" fill className="object-cover" sizes="96px" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return <ProjectPoster slug={slug} name={slug} className={`h-full min-h-[320px] ${className}`} rounded={false} />;
 }

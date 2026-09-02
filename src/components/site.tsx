@@ -10,7 +10,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { projects } from "@/data/projects";
-import { ProductComposition } from "@/components/poster-placeholder";
+import { HomeCardVisual } from "@/components/poster-placeholder";
 
 export const Container = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <div className={`mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10 ${className}`}>{children}</div>
@@ -165,16 +165,21 @@ export function SelectedWork() {
           <h2 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Production systems, not demo projects.</h2>
           <p className="max-w-xl text-sm leading-6 text-muted-bright lg:text-right">Each project highlights the operating problem, system boundaries, and engineering decisions—not just the framework list.</p>
         </div>
-        <div className="mt-10 space-y-6 sm:mt-12">
+        <div className="mt-14 space-y-6 sm:mt-16">
           {featured.map((p, i) => {
+            const isFeatured = i === 0;
             const textBlock = (
-              <div className={`flex flex-col justify-center p-7 sm:p-9 lg:p-10 xl:p-11 ${i === 0 ? "lg:h-full" : ""}`}>
+              <div className="flex flex-col justify-center p-7 sm:p-9 lg:h-full lg:p-10 xl:p-11">
                 <div className="font-mono text-xs tracking-[.16em] text-cyan">{p.index} / {p.eyebrow}</div>
                 <h3 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{p.name}</h3>
                 <p className="mt-4 max-w-2xl leading-7 text-muted-bright">{p.summary}</p>
                 {p.ownership && (
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {p.ownership.map((o) => <span key={o} className="rounded-full border border-line bg-panel2 px-3 py-1 font-mono text-xs text-muted-bright">{o}</span>)}
+                  <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
+                    {p.ownership.map((o) => (
+                      <div key={o} className="flex items-baseline gap-2 text-sm text-muted-bright">
+                        <span className="text-dim">↳</span>{o}
+                      </div>
+                    ))}
                   </div>
                 )}
                 <div className="mt-8">
@@ -182,24 +187,21 @@ export function SelectedWork() {
                 </div>
               </div>
             );
+            const visual = <HomeCardVisual slug={p.slug} className="lg:h-full" />;
             return (
-              <article key={p.slug} className={`group overflow-hidden rounded-3xl border border-line bg-panel shadow-soft transition duration-300 hover:-translate-y-1 hover:border-slate-500/60 ${i === 0 ? "lg:ring-1 lg:ring-cyan/5" : ""}`}>
-                {i === 0 && (
-                  <div className="border-b border-line bg-cyan/5 px-7 py-2.5 font-mono text-[10px] uppercase tracking-[.18em] text-cyan sm:px-9 lg:px-10">
+              <article key={p.slug} className={`group overflow-hidden rounded-2xl border border-line/60 bg-panel shadow-soft transition duration-300 hover:-translate-y-1 hover:border-slate-500/60`}>
+                {isFeatured && (
+                  <div className="border-b border-line/60 bg-cyan/5 px-7 py-2.5 font-mono text-[10px] uppercase tracking-[.18em] text-cyan sm:px-9 lg:px-10">
                     Featured case study
                   </div>
                 )}
-                {i === 0 ? (
-                  <div className="grid lg:grid-cols-[1.5fr_1fr]">
-                    <ProductComposition slug={p.slug} name={p.name} />
-                    {textBlock}
-                  </div>
-                ) : (
-                  <>
-                    <ProductComposition slug={p.slug} name={p.name} />
-                    {textBlock}
-                  </>
-                )}
+                <div className={`grid lg:h-[580px] ${isFeatured ? "lg:grid-cols-[1.5fr_1fr]" : "lg:grid-cols-[1fr_1.5fr]"}`}>
+                  {isFeatured ? (
+                    <>{visual}{textBlock}</>
+                  ) : (
+                    <>{textBlock}{visual}</>
+                  )}
+                </div>
               </article>
             );
           })}
