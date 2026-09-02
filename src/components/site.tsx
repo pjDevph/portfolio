@@ -10,7 +10,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { projects } from "@/data/projects";
-import { ProjectPoster } from "@/components/poster-placeholder";
+import { ProductComposition } from "@/components/poster-placeholder";
 
 export const Container = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <div className={`mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10 ${className}`}>{children}</div>
@@ -139,6 +139,9 @@ export function Snapshot() {
   ];
   return (
     <section className="border-b border-white/5 bg-ink/40">
+      <Container className="pt-5">
+        <div className="font-mono text-[10px] uppercase tracking-[.18em] text-dim">Production footprint</div>
+      </Container>
       <Container className="grid sm:grid-cols-2 lg:grid-cols-4">
         {items.map(([a, b], index) => (
           <div key={a} className={`py-6 sm:px-6 lg:py-7 ${index > 0 ? "sm:border-l sm:border-white/5" : ""} ${index === 2 ? "sm:border-l-0 lg:border-l" : ""}`}>
@@ -163,15 +166,9 @@ export function SelectedWork() {
           <p className="max-w-xl text-sm leading-6 text-muted-bright lg:text-right">Each project highlights the operating problem, system boundaries, and engineering decisions—not just the framework list.</p>
         </div>
         <div className="mt-10 space-y-6 sm:mt-12">
-          {featured.map((p, i) => (
-            <article key={p.slug} className={`group overflow-hidden rounded-3xl border border-line bg-panel shadow-soft transition duration-300 hover:-translate-y-1 hover:border-slate-500/60 ${i === 0 ? "lg:ring-1 lg:ring-cyan/5" : ""}`}>
-              {i === 0 && (
-                <div className="border-b border-line bg-cyan/5 px-7 py-2.5 font-mono text-[10px] uppercase tracking-[.18em] text-cyan sm:px-9 lg:px-10">
-                  Featured case study
-                </div>
-              )}
-              <ProjectPoster slug={p.slug} name={p.name} rounded={false} />
-              <div className="p-7 sm:p-9 lg:p-10 xl:p-11">
+          {featured.map((p, i) => {
+            const textBlock = (
+              <div className={`flex flex-col justify-center p-7 sm:p-9 lg:p-10 xl:p-11 ${i === 0 ? "lg:h-full" : ""}`}>
                 <div className="font-mono text-xs tracking-[.16em] text-cyan">{p.index} / {p.eyebrow}</div>
                 <h3 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{p.name}</h3>
                 <p className="mt-4 max-w-2xl leading-7 text-muted-bright">{p.summary}</p>
@@ -184,8 +181,28 @@ export function SelectedWork() {
                   <Link className="inline-flex items-center gap-2 text-sm font-semibold text-cyan transition group-hover:gap-3" href={`/projects/${p.slug}`}>Explore case study <ArrowRight size={16} /></Link>
                 </div>
               </div>
-            </article>
-          ))}
+            );
+            return (
+              <article key={p.slug} className={`group overflow-hidden rounded-3xl border border-line bg-panel shadow-soft transition duration-300 hover:-translate-y-1 hover:border-slate-500/60 ${i === 0 ? "lg:ring-1 lg:ring-cyan/5" : ""}`}>
+                {i === 0 && (
+                  <div className="border-b border-line bg-cyan/5 px-7 py-2.5 font-mono text-[10px] uppercase tracking-[.18em] text-cyan sm:px-9 lg:px-10">
+                    Featured case study
+                  </div>
+                )}
+                {i === 0 ? (
+                  <div className="grid lg:grid-cols-[1.5fr_1fr]">
+                    <ProductComposition slug={p.slug} name={p.name} />
+                    {textBlock}
+                  </div>
+                ) : (
+                  <>
+                    <ProductComposition slug={p.slug} name={p.name} />
+                    {textBlock}
+                  </>
+                )}
+              </article>
+            );
+          })}
         </div>
 
         {additional.length > 0 && (
@@ -210,12 +227,12 @@ export function SelectedWork() {
 }
 
 export function Capabilities() {
-  const groups = {
-    "Product Interfaces": ["TypeScript", "JavaScript", "React", "Next.js", "React Native", "Expo", "HTML5", "CSS3", "Tailwind CSS"],
-    "Backend & Data": ["Node.js", "NestJS", "Express", "Deno", "GraphQL", "REST APIs", "PostgreSQL", "MongoDB", "SQLite", "Supabase", "Firebase"],
-    "Infrastructure": ["Google Cloud", "Vercel", "GitHub Actions", "EAS Build", "EAS Update", "Webhooks", "Electron"],
-    "Systems Engineering": ["Multi-Tenant Architecture", "RBAC", "PostgreSQL RLS", "Offline-First Sync", "Idempotency", "Payment Infrastructure", "ESC/POS", "Native Expo Modules"],
-  };
+  const groups = [
+    { name: "Product Engineering", statement: "Web and mobile interfaces built around actual operational workflows, not demo UI.", tech: ["Next.js", "React Native", "Expo"] },
+    { name: "Backend & Data", statement: "APIs, data boundaries, and server-authoritative business rules — clients never compute what matters.", tech: ["NestJS", "PostgreSQL", "MongoDB"] },
+    { name: "Reliability", statement: "Offline operation, idempotency, and payment-safe transaction processing under real network failure.", tech: ["SQLite", "Webhooks", "RLS"] },
+    { name: "Hardware & Delivery", statement: "Deployment pipelines and physical POS integration, from EAS builds to thermal printers.", tech: ["EAS", "Vercel", "ESC/POS"] },
+  ];
   return (
     <section id="capabilities" className="section-anchor border-y border-white/5 bg-panel/40 py-20 sm:py-24">
       <Container>
@@ -224,13 +241,12 @@ export function Capabilities() {
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Capabilities shaped by production constraints.</h2>
           <p className="max-w-2xl text-sm leading-6 text-muted-bright lg:justify-self-end">Focused on full-stack delivery, data boundaries, offline reliability, and operational integrations across web and mobile clients.</p>
         </div>
-        <div className="grid gap-5 md:grid-cols-2">
-          {Object.entries(groups).map(([k, v]) => (
-            <div key={k} className="rounded-2xl border border-line bg-panel p-6 transition hover:border-slate-500/60">
-              <h3 className="text-xl font-semibold">{k}</h3>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {v.map((x) => <span key={x} className="rounded-md border border-line px-2.5 py-1.5 font-mono text-xs text-muted-bright">{x}</span>)}
-              </div>
+        <div className="grid gap-x-10 gap-y-8 md:grid-cols-2">
+          {groups.map((g) => (
+            <div key={g.name} className="border-t border-white/5 pt-5">
+              <h3 className="text-xl font-semibold">{g.name}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted-bright">{g.statement}</p>
+              <div className="mt-4 font-mono text-xs text-dim">{g.tech.join(" · ")}</div>
             </div>
           ))}
         </div>

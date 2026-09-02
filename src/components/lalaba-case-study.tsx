@@ -191,29 +191,6 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
 
         <SubNav />
 
-        <section className="border-b border-white/5 bg-ink/40 py-10">
-          <Container>
-            <div className="grid gap-10 lg:grid-cols-2">
-              <div>
-                <div className="font-mono text-[10px] uppercase tracking-[.18em] text-dim">System scale — quantitative</div>
-                <div className="mt-4 space-y-2.5">
-                  {project.metrics.map((m) => (
-                    <div key={m} className="text-lg font-semibold tracking-tight text-text/90">{m}</div>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <div className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">My ownership — what I personally built</div>
-                <div className="mt-4">
-                  {(project.ownership ?? []).map((o) => (
-                    <div key={o} className="border-b border-white/5 py-2.5 text-sm text-muted-bright last:border-b-0">{o}</div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Container>
-        </section>
-
         <section id="overview" className="section-anchor py-20">
           <Container>
             <div className="font-mono text-xs uppercase tracking-[.18em] text-dim">The project in 30 seconds</div>
@@ -231,7 +208,35 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
                 </div>
               ))}
             </div>
-            <div className="mt-16 grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+          </Container>
+        </section>
+
+        <section className="border-y border-white/5 bg-ink/40 py-10">
+          <Container>
+            <div className="grid gap-10 lg:grid-cols-2">
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">My ownership — what I personally built</div>
+                <div className="mt-4">
+                  {(project.ownership ?? []).map((o) => (
+                    <div key={o} className="border-b border-white/5 py-2.5 text-sm text-muted-bright last:border-b-0">{o}</div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[.18em] text-dim">System scale — quantitative</div>
+                <div className="mt-4 space-y-2.5">
+                  {project.metrics.map((m) => (
+                    <div key={m} className="text-lg font-semibold tracking-tight text-text/90">{m}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        <section className="py-20">
+          <Container>
+            <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
               <div>
                 <h2 className="text-3xl font-bold">What I worked on</h2>
                 <p className="mt-4 text-sm leading-6 text-muted-bright">

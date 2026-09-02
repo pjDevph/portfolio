@@ -31,3 +31,45 @@ export function ProjectPoster({ slug, name, className = "", rounded = true }: Po
   }
   return <PosterPlaceholder slug={slug} name={name} className={className} rounded={rounded} />;
 }
+
+/**
+ * Real multi-screenshot composition for a project, used on the homepage
+ * cards in place of a single poster — shows actual product surfaces
+ * instead of one marketing shot. Falls back to ProjectPoster for any
+ * slug without a defined composition.
+ */
+export function ProductComposition({ slug, name, className = "" }: PosterProps) {
+  if (slug === "findxny-os") {
+    return (
+      <div className={`grid grid-cols-3 gap-1.5 ${className}`}>
+        <div className="relative col-span-2 aspect-[8/5] overflow-hidden bg-panel">
+          <Image src="/projects/findxny-os/pos-order-offline.jpg" alt="FINDXNY OS POS order entry, offline mode" fill className="object-cover" sizes="(min-width: 1024px) 40vw, 66vw" />
+        </div>
+        <div className="grid grid-rows-2 gap-1.5">
+          <div className="relative aspect-[8/5] overflow-hidden bg-panel">
+            <Image src="/projects/findxny-os/pos-dashboard.jpg" alt="FINDXNY OS owner dashboard" fill className="object-cover" sizes="(min-width: 1024px) 20vw, 33vw" />
+          </div>
+          <div className="relative aspect-[8/5] overflow-hidden bg-panel">
+            <Image src="/projects/findxny-os/storefront.jpg" alt="Mugthemug storefront, powered by FINDXNY" fill className="object-cover" sizes="(min-width: 1024px) 20vw, 33vw" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (slug === "lalaba") {
+    return (
+      <div className={`grid grid-cols-2 gap-1.5 ${className}`}>
+        <div className="relative aspect-[4/5] overflow-hidden bg-panel">
+          <Image src="/projects/lalaba/customer-app.jpg" alt="Lalaba customer app" fill className="object-cover" sizes="(min-width: 1024px) 30vw, 50vw" />
+        </div>
+        <div className="relative aspect-[4/5] overflow-hidden bg-panel">
+          <Image src="/projects/lalaba/partner-app.jpg" alt="Lalaba partner app" fill className="object-cover" sizes="(min-width: 1024px) 30vw, 50vw" />
+        </div>
+        <div className="relative col-span-2 aspect-[16/7] overflow-hidden bg-panel">
+          <Image src="/projects/lalaba/admin-panel.jpg" alt="Lalaba admin panel" fill className="object-cover" sizes="(min-width: 1024px) 60vw, 100vw" />
+        </div>
+      </div>
+    );
+  }
+  return <ProjectPoster slug={slug} name={name} className={className} rounded={false} />;
+}
