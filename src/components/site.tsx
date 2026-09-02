@@ -131,7 +131,7 @@ export function Hero() {
               Full-Stack Engineer building production web, mobile, backend, and offline systems.
             </p>
             <p className="mt-5 max-w-2xl text-base leading-7 text-muted-bright sm:text-lg">
-              I build multi-tenant platforms, mobile applications, APIs, payment infrastructure, offline-first workflows, and operational software using TypeScript.
+              I build reliable product systems across web, mobile, and backend — with experience in offline POS, payments, multi-tenant architecture, and operational software.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href="#work" className="inline-flex items-center gap-2 rounded-full bg-text px-5 py-3 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:opacity-95">
@@ -158,7 +158,7 @@ export function Hero() {
 export function Snapshot() {
   const items = [
     ["3", "Production platforms"],
-    ["~115", "Edge Functions on FINDXNY OS"],
+    ["114", "Edge Functions on FINDXNY OS"],
     ["119", "Database migrations"],
     ["Web · Mobile · POS", "Plus payments & hardware"],
   ];
@@ -242,6 +242,8 @@ function ProjectVisual({ index, architecture }: { index: number; architecture: s
 }
 
 export function SelectedWork() {
+  const featured = projects.filter((p) => p.slug !== "athlete-central");
+  const additional = projects.filter((p) => p.slug === "athlete-central");
   return (
     <section id="work" className="section-anchor py-20 sm:py-24 lg:py-28">
       <Container>
@@ -251,8 +253,13 @@ export function SelectedWork() {
           <p className="max-w-xl text-sm leading-6 text-muted-bright lg:text-right">Each project highlights the operating problem, system boundaries, and engineering decisions—not just the framework list.</p>
         </div>
         <div className="mt-10 space-y-6 sm:mt-12">
-          {projects.map((p, i) => (
+          {featured.map((p, i) => (
             <article key={p.slug} className={`group overflow-hidden rounded-3xl border border-line bg-panel shadow-soft transition duration-300 hover:-translate-y-1 hover:border-slate-500/60 ${i === 0 ? "lg:ring-1 lg:ring-cyan/5" : ""}`}>
+              {i === 0 && (
+                <div className="border-b border-line bg-cyan/5 px-7 py-2.5 font-mono text-[10px] uppercase tracking-[.18em] text-cyan sm:px-9 lg:px-10">
+                  Featured case study
+                </div>
+              )}
               <div className="grid lg:grid-cols-[1.03fr_.97fr]">
                 <div className="p-7 sm:p-9 lg:p-10 xl:p-11">
                   <div className="font-mono text-xs tracking-[.16em] text-cyan">{p.index} / {p.eyebrow}</div>
@@ -271,7 +278,7 @@ export function SelectedWork() {
                   </div>
                 </div>
                 <div className="border-t border-line bg-[linear-gradient(140deg,rgba(56,189,248,.06),transparent_45%),linear-gradient(320deg,rgba(129,140,248,.05),transparent_45%),#0b111b] p-5 sm:p-7 lg:border-l lg:border-t-0 lg:p-8">
-                  <ProjectVisual index={i} architecture={p.architecture} />
+                  <ProjectVisual index={projects.indexOf(p)} architecture={p.architecture} />
                 </div>
               </div>
               <div className="border-t border-line p-5 sm:p-7 lg:p-8">
@@ -280,6 +287,23 @@ export function SelectedWork() {
             </article>
           ))}
         </div>
+
+        {additional.length > 0 && (
+          <div className="mt-14">
+            <div className="font-mono text-xs uppercase tracking-[.18em] text-dim">Additional engineering work</div>
+            <div className="mt-4 space-y-3">
+              {additional.map((p) => (
+                <Link key={p.slug} href={`/projects/${p.slug}`} className="group flex flex-col gap-2 rounded-2xl border border-line bg-panel/60 p-5 transition hover:border-slate-500/60 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                  <div>
+                    <div className="text-base font-semibold">{p.name}</div>
+                    <p className="mt-1 max-w-xl text-sm leading-6 text-muted-bright">{p.summary}</p>
+                  </div>
+                  <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-cyan transition group-hover:gap-3">View case study <ArrowRight size={16} /></span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </Container>
     </section>
   );
@@ -317,11 +341,18 @@ export function Capabilities() {
 
 export function Experience() {
   const items = [
-    ["May 2026 – Jul 2026", "FINDXNY OS", "Junior Full-Stack Engineer"],
-    ["Oct 2025 – Aug 2026", "Lalaba", "Junior Full-Stack Engineer"],
-    ["May 2025 – Sept 2025", "Athlete Central", "Junior Full-Stack Engineer"],
-    ["Apr 2021 – Apr 2025", "Department of Education", "Special Science Teacher I"],
-    ["Dec 2019 – Mar 2021", "Iraseth Pharma Inc.", "Biomedical Engineer"],
+    {
+      date: "May 2025 – Jul 2026",
+      org: "FINDXNY",
+      role: "Junior Full-Stack Engineer",
+      projects: [
+        { name: "FINDXNY OS", period: "May 2026 – Jul 2026" },
+        { name: "Lalaba", period: "Oct 2025 – Aug 2026" },
+        { name: "Athlete Central", period: "May 2025 – Sept 2025" },
+      ],
+    },
+    { date: "Apr 2021 – Apr 2025", org: "Department of Education", role: "Special Science Teacher I", projects: null },
+    { date: "Dec 2019 – Mar 2021", org: "Iraseth Pharma Inc.", role: "Biomedical Engineer", projects: null },
   ];
   return (
     <section id="experience" className="section-anchor py-20 sm:py-24 lg:py-28">
@@ -333,12 +364,19 @@ export function Experience() {
             <p className="mt-5 max-w-lg leading-7 text-muted-bright">My background spans production software, electronics, technical instruction, and biomedical equipment—useful experience for understanding systems, failure modes, and technical communication.</p>
           </div>
           <div className="border-l border-line">
-            {items.map(([date, org, role]) => (
-              <div key={org} className="relative border-b border-line py-5 pl-7 last:border-b-0">
+            {items.map((item) => (
+              <div key={item.org} className="relative border-b border-line py-5 pl-7 last:border-b-0">
                 <span className="absolute -left-[5px] top-7 h-2.5 w-2.5 rounded-full bg-cyan" />
-                <div className="font-mono text-xs text-dim">{date}</div>
-                <div className="mt-1 text-lg font-semibold">{org}</div>
-                <div className="text-sm text-muted-bright">{role}</div>
+                <div className="font-mono text-xs text-dim">{item.date}</div>
+                <div className="mt-1 text-lg font-semibold">{item.org}</div>
+                <div className="text-sm text-muted-bright">{item.role}</div>
+                {item.projects && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {item.projects.map((p) => (
+                      <span key={p.name} className="rounded-full border border-line bg-panel2 px-3 py-1 font-mono text-xs text-muted-bright" title={p.period}>{p.name}</span>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

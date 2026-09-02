@@ -24,12 +24,7 @@ const SUBNAV = [
   ["product", "Product"],
   ["pos", "POS & Admin"],
   ["architecture", "Architecture"],
-  ["stack", "Stack"],
-  ["features", "Features"],
-  ["data", "Data"],
-  ["offline", "Offline"],
-  ["payments", "Payments"],
-  ["hardware", "Hardware"],
+  ["offline", "Engineering"],
   ["decisions", "Decisions"],
   ["repo", "Repository"],
 ];
@@ -198,21 +193,50 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
 
         <SubNav />
 
-        <section className="border-b border-white/5 bg-ink/40">
-          <Container className="grid sm:grid-cols-2 lg:grid-cols-5">
-            {project.metrics.map((m, i) => (
-              <div key={m} className={`py-6 sm:px-6 lg:py-7 ${i > 0 ? "sm:border-l sm:border-white/5" : ""}`}>
-                <div className="text-base font-semibold tracking-tight">{m}</div>
+        <section className="border-b border-white/5 bg-ink/40 py-6">
+          <Container>
+            <div className="font-mono text-[10px] uppercase tracking-[.18em] text-dim">System scale</div>
+            <div className="mt-3 grid sm:grid-cols-2 lg:grid-cols-5">
+              {project.metrics.map((m, i) => (
+                <div key={m} className={`py-2 sm:px-6 sm:py-0 ${i > 0 ? "sm:border-l sm:border-white/5" : ""}`}>
+                  <div className="text-base font-semibold tracking-tight">{m}</div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 border-t border-white/5 pt-6">
+              <div className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">My ownership</div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {["Offline sync & idempotent replay", "Payment webhooks & dedup", "Tenant/role access (RLS)", "POS hardware integrations"].map((o) => (
+                  <span key={o} className="rounded-full border border-cyan/20 bg-cyan/5 px-3 py-1.5 text-xs font-medium text-text">{o}</span>
+                ))}
               </div>
-            ))}
+            </div>
           </Container>
         </section>
 
         <section id="overview" className="section-anchor py-20">
           <Container>
-            <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+            <SectionLabel>Overview</SectionLabel>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="rounded-2xl border border-line bg-panel p-5">
+                <div className="font-mono text-xs text-cyan">PROBLEM</div>
+                <p className="mt-2 text-sm leading-6 text-muted-bright">Restaurants and cafés still need to sell when the internet drops, and one platform has to run more than one tenant business.</p>
+              </div>
+              <div className="rounded-2xl border border-line bg-panel p-5">
+                <div className="font-mono text-xs text-cyan">PRODUCT</div>
+                <p className="mt-2 text-sm leading-6 text-muted-bright">A multi-tenant web storefront, admin back office, Expo POS/kitchen app, and shared Supabase/Postgres backend.</p>
+              </div>
+              <div className="rounded-2xl border border-line bg-panel p-5">
+                <div className="font-mono text-xs text-cyan">MY ROLE</div>
+                <p className="mt-2 text-sm leading-6 text-muted-bright">Offline sync, payment webhooks, tenant/role access boundaries, and POS hardware integrations.</p>
+              </div>
+              <div className="rounded-2xl border border-line bg-panel p-5">
+                <div className="font-mono text-xs text-cyan">RESULT</div>
+                <p className="mt-2 text-sm leading-6 text-muted-bright">Cashiers keep transacting offline and reconcile safely on reconnect — running a real business today.</p>
+              </div>
+            </div>
+            <div className="mt-10 grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
               <div>
-                <SectionLabel>Overview</SectionLabel>
                 <h2 className="text-3xl font-bold">What I worked on</h2>
                 <p className="mt-4 text-sm leading-6 text-muted-bright">
                   FINDXNY OS is a monorepo: a Next.js web app (customer storefront + admin back office), an Expo
