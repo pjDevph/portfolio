@@ -191,22 +191,24 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
 
         <SubNav />
 
-        <section className="border-b border-white/5 bg-ink/40 py-6">
+        <section className="border-b border-white/5 bg-ink/40 py-10">
           <Container>
-            <div className="font-mono text-[10px] uppercase tracking-[.18em] text-dim">System scale</div>
-            <div className="mt-3 grid sm:grid-cols-2 lg:grid-cols-5">
-              {project.metrics.map((m, i) => (
-                <div key={m} className={`py-2 sm:px-6 sm:py-0 ${i > 0 ? "sm:border-l sm:border-white/5" : ""}`}>
-                  <div className="text-base font-semibold tracking-tight">{m}</div>
+            <div className="grid gap-10 lg:grid-cols-2">
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[.18em] text-dim">System scale — quantitative</div>
+                <div className="mt-4 space-y-2.5">
+                  {project.metrics.map((m) => (
+                    <div key={m} className="text-lg font-semibold tracking-tight text-text/90">{m}</div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div className="mt-6 border-t border-white/5 pt-6">
-              <div className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">My ownership</div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {["Branch-scoped device approval", "Wallet webhook idempotency", "Server-authoritative pricing", "Permission/role enforcement"].map((o) => (
-                  <span key={o} className="rounded-full border border-cyan/20 bg-cyan/5 px-3 py-1.5 text-xs font-medium text-text">{o}</span>
-                ))}
+              </div>
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">My ownership — what I personally built</div>
+                <div className="mt-4">
+                  {(project.ownership ?? []).map((o) => (
+                    <div key={o} className="border-b border-white/5 py-2.5 text-sm text-muted-bright last:border-b-0">{o}</div>
+                  ))}
+                </div>
               </div>
             </div>
           </Container>
@@ -214,26 +216,22 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
 
         <section id="overview" className="section-anchor py-20">
           <Container>
-            <SectionLabel>Overview</SectionLabel>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-2xl border border-line bg-panel p-5">
-                <div className="font-mono text-xs text-cyan">PROBLEM</div>
-                <p className="mt-2 text-sm leading-6 text-muted-bright">A laundry marketplace needs customers, providers, and staff to trust the same pricing, capacity, and access rules across separate apps.</p>
-              </div>
-              <div className="rounded-2xl border border-line bg-panel p-5">
-                <div className="font-mono text-xs text-cyan">PRODUCT</div>
-                <p className="mt-2 text-sm leading-6 text-muted-bright">A NestJS/GraphQL backend behind a Customer app, Partner app, admin panel, and marketing site — 5 repos, one API.</p>
-              </div>
-              <div className="rounded-2xl border border-line bg-panel p-5">
-                <div className="font-mono text-xs text-cyan">MY ROLE</div>
-                <p className="mt-2 text-sm leading-6 text-muted-bright">Branch-scoped device approval, wallet webhook idempotency, and server-authoritative pricing/permissions.</p>
-              </div>
-              <div className="rounded-2xl border border-line bg-panel p-5">
-                <div className="font-mono text-xs text-cyan">RESULT</div>
-                <p className="mt-2 text-sm leading-6 text-muted-bright">A device can't stay authorized after deactivation, and a retried payment callback can't double-credit a wallet.</p>
-              </div>
+            <div className="font-mono text-xs uppercase tracking-[.18em] text-dim">The project in 30 seconds</div>
+            <div className="mt-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+              {[
+                { n: "01", label: "Problem", text: "A laundry marketplace needs customers, providers, and staff to trust the same pricing, capacity, and access rules across separate apps." },
+                { n: "02", label: "Product", text: "A NestJS/GraphQL backend behind a Customer app, Partner app, admin panel, and marketing site — 5 repos, one API." },
+                { n: "03", label: "My role", text: "Branch-scoped device approval, wallet webhook idempotency, and server-authoritative pricing/permissions." },
+                { n: "04", label: "Result", text: "A device can't stay authorized after deactivation, and a retried payment callback can't double-credit a wallet." },
+              ].map((s, i) => (
+                <div key={s.n} className={`lg:pr-8 ${i > 0 ? "lg:border-l lg:border-white/5 lg:pl-8" : ""}`}>
+                  <div className="font-mono text-sm text-cyan">{s.n}</div>
+                  <div className="mt-2 text-lg font-semibold">{s.label}</div>
+                  <p className="mt-2 text-sm leading-6 text-muted-bright">{s.text}</p>
+                </div>
+              ))}
             </div>
-            <div className="mt-10 grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+            <div className="mt-16 grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
               <div>
                 <h2 className="text-3xl font-bold">What I worked on</h2>
                 <p className="mt-4 text-sm leading-6 text-muted-bright">
@@ -252,8 +250,19 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
         <section id="product" className="border-y border-white/5 bg-panel/40 py-20">
           <Container>
             <SectionLabel>Product surfaces</SectionLabel>
-            <h2 className="text-3xl font-bold">Five repos, one backend</h2>
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
+            <h2 className="text-3xl font-bold">An ecosystem, not a single app</h2>
+            <div className="mt-8 flex flex-col items-center">
+              <div className="grid w-full max-w-lg grid-cols-3 gap-3">
+                <div className="arch-node">Customer</div>
+                <div className="arch-node">Partner</div>
+                <div className="arch-node">Admin</div>
+              </div>
+              <span className="flow-connector my-1" />
+              <div className="arch-node cyan w-full max-w-xs text-center">Lalaba — NestJS / GraphQL</div>
+              <span className="flow-connector my-1" />
+              <div className="arch-node w-full max-w-xs text-center">MongoDB + Redis</div>
+            </div>
+            <div className="mt-10 grid gap-5 md:grid-cols-2">
               {PRODUCT_SURFACES.map((s) => (
                 <div key={s.name} className="overflow-hidden rounded-2xl border border-line bg-panel">
                   {s.image && (

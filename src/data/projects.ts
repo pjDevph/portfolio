@@ -12,6 +12,7 @@ export type Project = {
   decisions: { title: string; problem: string; decision: string; why: string }[];
   architecture: string[];
   live?: string;
+  ownership?: string[];
 };
 
 export const projects: Project[] = [
@@ -35,7 +36,8 @@ export const projects: Project[] = [
       { title: "Offline transaction durability", problem: "Cashiers still need to transact when internet access drops.", decision: "Persist pending operations in SQLite and replay them with idempotency keys when connectivity returns.", why: "Transactions survive app restarts and network interruptions without double-charging or double-posting." },
       { title: "Tenant isolation", problem: "Many businesses and branches share the same infrastructure.", decision: "Enforce tenant boundaries in PostgreSQL RLS and edge middleware instead of trusting client-side filtering.", why: "A compromised or buggy client cannot freely cross workspace boundaries." }
     ],
-    architecture: ["Next.js Web", "Expo POS", "Supabase Auth", "Deno Edge Functions", "PostgreSQL + RLS", "SQLite Offline Queue", "Xendit", "ESC/POS Hardware"]
+    architecture: ["Next.js Web", "Expo POS", "Supabase Auth", "Deno Edge Functions", "PostgreSQL + RLS", "SQLite Offline Queue", "Xendit", "ESC/POS Hardware"],
+    ownership: ["Offline sync & idempotent replay", "Payment webhooks & dedup", "Tenant/role access (RLS)", "POS hardware integrations"]
   },
   {
     slug: "lalaba",
@@ -57,7 +59,8 @@ export const projects: Project[] = [
       { title: "Server-authoritative pricing", problem: "Different clients could otherwise compute inconsistent totals, platform fees, and booking capacity.", decision: "Centralize fee, voucher, availability, and booking-policy rules in dedicated backend modules (platform-fee, booking-availability, booking-policy).", why: "The backend is the single source of truth for money and capacity — no client can under- or over-charge by recomputing a total locally." },
       { title: "Branch-scoped device approval", problem: "Staff devices and permissions differ by branch, and a lost/shared device is a real access risk in a laundry-branch setting.", decision: "Gate each device to a single active session server-side, cache the auth check for 5 minutes, and scope grants to the approved branch.", why: "A device can't silently stay authorized after being deactivated, and permissions can't be inferred from UI state alone." }
     ],
-    architecture: ["Expo Customer App", "Expo Partner App", "Next.js Admin", "Next.js Website", "NestJS GraphQL", "MongoDB", "Redis", "Firebase Auth", "Xendit"]
+    architecture: ["Expo Customer App", "Expo Partner App", "Next.js Admin", "Next.js Website", "NestJS GraphQL", "MongoDB", "Redis", "Firebase Auth", "Xendit"],
+    ownership: ["Branch-scoped device approval", "Wallet webhook idempotency", "Server-authoritative pricing", "Permission/role enforcement"]
   },
   {
     slug: "athlete-central",

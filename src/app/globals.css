@@ -38,21 +38,18 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-link:hover::after { right: 0; }
 .text-muted-bright { color: #A9B7CA; }
-.system-row { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
-.system-row span:last-child { color: #64748B; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; }
-.mini-system-card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .45rem;
-  min-height: 52px;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: .85rem;
-  background: rgba(0,0,0,.16);
-  color: #A9B7CA;
-  font-size: 12px;
-  text-align: center;
+.flow-tier-chip {
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: .75rem;
+  background: rgba(0,0,0,.2);
+  padding: .6rem 1.1rem;
+  font-size: 13px;
+  font-weight: 500;
+  color: #D7E0EC;
 }
+.flow-tier-chip--accent { border-color: rgba(56,189,248,.35); background: rgba(56,189,248,.08); color: #38BDF8; }
+.flow-tier-chip--small { font-size: 11px; padding: .5rem .85rem; color: #A9B7CA; }
+.flow-connector { width: 1px; height: 18px; background: #243044; }
 .metric-chip {
   min-height: 44px;
   border: 1px solid #243044;

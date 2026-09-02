@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { ImagePlus } from "lucide-react";
 
-export function PosterPlaceholder({ slug, name, className = "" }: { slug: string; name: string; className?: string }) {
+type PosterProps = { slug: string; name: string; className?: string; rounded?: boolean };
+
+export function PosterPlaceholder({ slug, name, className = "", rounded = true }: PosterProps) {
   return (
-    <div className={`flex aspect-[16/9] w-full flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-line bg-panel/60 text-center ${className}`}>
+    <div className={`flex aspect-[16/9] w-full flex-col items-center justify-center gap-3 border border-dashed border-line bg-panel/60 text-center ${rounded ? "rounded-2xl" : ""} ${className}`}>
       <ImagePlus size={28} className="text-dim" />
       <div>
         <div className="font-mono text-xs uppercase tracking-[.16em] text-dim">Poster placeholder — {name}</div>
@@ -19,13 +21,13 @@ const HAS_POSTER: Record<string, boolean> = {
   "athlete-central": true,
 };
 
-export function ProjectPoster({ slug, name, className = "" }: { slug: string; name: string; className?: string }) {
+export function ProjectPoster({ slug, name, className = "", rounded = true }: PosterProps) {
   if (HAS_POSTER[slug]) {
     return (
-      <div className={`relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-line bg-panel ${className}`}>
+      <div className={`relative aspect-[16/9] w-full overflow-hidden bg-panel ${rounded ? "rounded-2xl border border-line" : ""} ${className}`}>
         <Image src={`/projects/${slug}/poster.jpg`} alt={`${name} poster`} fill className="object-cover" sizes="(min-width: 1024px) 60vw, 100vw" />
       </div>
     );
   }
-  return <PosterPlaceholder slug={slug} name={name} className={className} />;
+  return <PosterPlaceholder slug={slug} name={name} className={className} rounded={rounded} />;
 }

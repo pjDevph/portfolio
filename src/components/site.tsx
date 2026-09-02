@@ -8,15 +8,6 @@ import {
   Download,
   MapPin,
   ExternalLink,
-  Smartphone,
-  Monitor,
-  Database,
-  Cloud,
-  ReceiptText,
-  CalendarDays,
-  ShieldCheck,
-  WifiOff,
-  CreditCard,
 } from "lucide-react";
 import { projects } from "@/data/projects";
 import { ProjectPoster } from "@/components/poster-placeholder";
@@ -72,43 +63,27 @@ export const SectionLabel = ({ children }: { children: React.ReactNode }) => (
 
 function HeroSystemVisual() {
   return (
-    <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
+    <div className="relative mx-auto w-full max-w-md lg:max-w-none">
       <div className="absolute -inset-8 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(56,189,248,.12),transparent_62%)] blur-2xl" />
-      <div className="rounded-3xl border border-line bg-panel/90 p-5 shadow-soft sm:p-6">
-        <div className="flex items-center justify-between border-b border-white/5 pb-4">
-          <div>
-            <div className="font-mono text-[11px] uppercase tracking-[.18em] text-dim">Engineering surface</div>
-            <div className="mt-1 text-sm font-medium text-text">Web · Mobile · Backend · Operations</div>
+      <div className="rounded-3xl border border-line bg-panel/90 p-8 shadow-soft sm:p-10">
+        <div className="flex flex-col items-center gap-2.5">
+          <div className="flex gap-2.5">
+            <div className="flow-tier-chip">Web</div>
+            <div className="flow-tier-chip">Mobile</div>
           </div>
-          <span className="rounded-full border border-success/20 bg-success/5 px-2.5 py-1 font-mono text-[10px] text-success">PRODUCTION</span>
-        </div>
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <div className="flex items-center gap-2 text-sm font-medium"><Monitor size={16} className="text-cyan" /> Product clients</div>
-            <div className="mt-4 space-y-2.5 text-xs text-muted">
-              <div className="system-row"><span>Next.js web</span><span>UI</span></div>
-              <div className="system-row"><span>Expo mobile / POS</span><span>APP</span></div>
-              <div className="system-row"><span>Electron admin</span><span>OPS</span></div>
-            </div>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <div className="flex items-center gap-2 text-sm font-medium"><Database size={16} className="text-violet" /> Core systems</div>
-            <div className="mt-4 space-y-2.5 text-xs text-muted">
-              <div className="system-row"><span>API / GraphQL</span><span>API</span></div>
-              <div className="system-row"><span>PostgreSQL / MongoDB</span><span>DATA</span></div>
-              <div className="system-row"><span>RLS / RBAC</span><span>AUTH</span></div>
-            </div>
+          <span className="flow-connector" />
+          <div className="flow-tier-chip flow-tier-chip--accent">API</div>
+          <span className="flow-connector" />
+          <div className="flow-tier-chip">Data + Auth</div>
+          <span className="flow-connector" />
+          <div className="flex flex-wrap justify-center gap-2.5">
+            <div className="flow-tier-chip flow-tier-chip--small">Payments</div>
+            <div className="flow-tier-chip flow-tier-chip--small">Offline</div>
+            <div className="flow-tier-chip flow-tier-chip--small">POS</div>
           </div>
         </div>
-        <div className="my-4 flex items-center gap-2 px-1 text-[10px] text-dim">
-          <span className="h-px flex-1 bg-line" />
-          <span className="font-mono tracking-[.16em]">RELIABLE OPERATIONS</span>
-          <span className="h-px flex-1 bg-line" />
-        </div>
-        <div className="grid grid-cols-3 gap-2">
-          <div className="mini-system-card"><WifiOff size={15} />Offline sync</div>
-          <div className="mini-system-card"><CreditCard size={15} />Payments</div>
-          <div className="mini-system-card"><ReceiptText size={15} />POS hardware</div>
+        <div className="mt-8 border-t border-white/5 pt-5 text-center font-mono text-[10px] uppercase tracking-[.18em] text-dim">
+          Full-stack product systems
         </div>
       </div>
     </div>
@@ -176,71 +151,6 @@ export function Snapshot() {
   );
 }
 
-function ProjectVisual({ index, architecture }: { index: number; architecture: string[] }) {
-  if (index === 0) {
-    return (
-      <div className="project-visual-shell">
-        <div className="project-visual-label">OFFLINE POS / TENANT SYSTEM</div>
-        <div className="mt-5 grid grid-cols-[.9fr_1.15fr] gap-3">
-          <div className="space-y-3">
-            <div className="visual-box"><Monitor size={16} />Next.js Web</div>
-            <div className="visual-box"><Smartphone size={16} />Expo POS</div>
-            <div className="visual-box"><WifiOff size={16} />SQLite Queue</div>
-          </div>
-          <div className="rounded-2xl border border-cyan/15 bg-cyan/[.035] p-4">
-            <div className="flex items-center gap-2 text-sm font-medium"><Cloud size={16} className="text-cyan" />Supabase Core</div>
-            <div className="mt-4 space-y-3 text-xs text-muted-bright">
-              <div className="visual-node">Deno Edge Functions</div>
-              <div className="visual-node">PostgreSQL + RLS</div>
-              <div className="visual-node">Xendit Webhooks</div>
-            </div>
-          </div>
-        </div>
-        <div className="mt-3 rounded-xl border border-white/10 bg-black/20 px-4 py-3 font-mono text-[10px] tracking-wide text-dim">LOCAL QUEUE → IDEMPOTENT REPLAY → SERVER RECONCILIATION</div>
-      </div>
-    );
-  }
-
-  if (index === 1) {
-    return (
-      <div className="project-visual-shell">
-        <div className="project-visual-label">MULTI-ROLE MARKETPLACE</div>
-        <div className="mt-5 grid grid-cols-3 gap-3">
-          {["Customer", "Partner", "Admin"].map((label, i) => (
-            <div key={label} className="rounded-2xl border border-white/10 bg-black/20 p-3 text-center">
-              <div className={`mx-auto flex ${i === 2 ? "h-16 w-full" : "h-24 w-12"} items-center justify-center rounded-xl border border-line bg-panel2`}>
-                {i === 2 ? <Monitor size={20} className="text-cyan" /> : <Smartphone size={20} className="text-cyan" />}
-              </div>
-              <div className="mt-3 text-xs font-medium text-muted-bright">{label}</div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-4 rounded-2xl border border-violet/15 bg-violet/[.035] p-4">
-          <div className="flex items-center justify-between text-xs"><span className="font-medium text-text">NestJS GraphQL</span><span className="font-mono text-[10px] text-dim">SOURCE OF TRUTH</span></div>
-          <div className="mt-3 grid grid-cols-2 gap-2 text-[11px] text-muted-bright"><span>Branch permissions</span><span>Server pricing</span><span>Booking capacity</span><span>Firebase + Maps</span></div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="project-visual-shell">
-      <div className="project-visual-label">BOOKING & SCHEDULING DOMAIN</div>
-      <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-4">
-        <div className="flex items-center justify-between"><div className="flex items-center gap-2 text-sm font-medium"><CalendarDays size={16} className="text-cyan" />Facility availability</div><span className="font-mono text-[10px] text-dim">LIVE</span></div>
-        <div className="mt-4 grid grid-cols-5 gap-2">
-          {["09", "10", "11", "12", "13", "14", "15", "16", "17", "18"].map((x, i) => <span key={x} className={`rounded-lg border px-2 py-2 text-center font-mono text-[10px] ${[1,2,5,6].includes(i) ? "border-cyan/30 bg-cyan/10 text-cyan" : "border-line text-dim"}`}>{x}:00</span>)}
-        </div>
-      </div>
-      <div className="mt-3 grid grid-cols-2 gap-3">
-        <div className="visual-box"><ShieldCheck size={16} />Shared booking rules</div>
-        <div className="visual-box"><Database size={16} />Firebase backend</div>
-      </div>
-      <div className="mt-3 font-mono text-[10px] tracking-wide text-dim">WEB · MOBILE · POS · ADMIN</div>
-    </div>
-  );
-}
-
 export function SelectedWork() {
   const featured = projects.filter((p) => p.slug !== "athlete-central");
   const additional = projects.filter((p) => p.slug === "athlete-central");
@@ -260,29 +170,19 @@ export function SelectedWork() {
                   Featured case study
                 </div>
               )}
-              <div className="grid lg:grid-cols-[1.03fr_.97fr]">
-                <div className="p-7 sm:p-9 lg:p-10 xl:p-11">
-                  <div className="font-mono text-xs tracking-[.16em] text-cyan">{p.index} / {p.eyebrow}</div>
-                  <h3 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{p.name}</h3>
-                  <p className="mt-4 max-w-2xl leading-7 text-muted-bright">{p.summary}</p>
-                  <div className="mt-6 grid gap-2 sm:grid-cols-2">
-                    {p.metrics.slice(0, 4).map((m) => <div key={m} className="metric-chip">{m}</div>)}
-                  </div>
+              <ProjectPoster slug={p.slug} name={p.name} rounded={false} />
+              <div className="p-7 sm:p-9 lg:p-10 xl:p-11">
+                <div className="font-mono text-xs tracking-[.16em] text-cyan">{p.index} / {p.eyebrow}</div>
+                <h3 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{p.name}</h3>
+                <p className="mt-4 max-w-2xl leading-7 text-muted-bright">{p.summary}</p>
+                {p.ownership && (
                   <div className="mt-6 flex flex-wrap gap-2">
-                    {p.stack.slice(0, 6).map((s) => <span key={s} className="rounded-full border border-line bg-panel2 px-3 py-1 font-mono text-xs text-muted-bright">{s}</span>)}
-                    {p.stack.length > 6 && <span className="rounded-full border border-dashed border-line px-3 py-1 font-mono text-xs text-dim">+{p.stack.length - 6} more</span>}
+                    {p.ownership.map((o) => <span key={o} className="rounded-full border border-line bg-panel2 px-3 py-1 font-mono text-xs text-muted-bright">{o}</span>)}
                   </div>
-                  <div className="mt-8 flex flex-wrap items-center gap-5">
-                    <Link className="inline-flex items-center gap-2 text-sm font-semibold text-cyan transition group-hover:gap-3" href={`/projects/${p.slug}`}>View case study <ArrowRight size={16} /></Link>
-                    <span className="font-mono text-[10px] uppercase tracking-[.15em] text-dim">Architecture · Decisions · Outcomes</span>
-                  </div>
+                )}
+                <div className="mt-8">
+                  <Link className="inline-flex items-center gap-2 text-sm font-semibold text-cyan transition group-hover:gap-3" href={`/projects/${p.slug}`}>Explore case study <ArrowRight size={16} /></Link>
                 </div>
-                <div className="border-t border-line bg-[linear-gradient(140deg,rgba(56,189,248,.06),transparent_45%),linear-gradient(320deg,rgba(129,140,248,.05),transparent_45%),#0b111b] p-5 sm:p-7 lg:border-l lg:border-t-0 lg:p-8">
-                  <ProjectVisual index={projects.indexOf(p)} architecture={p.architecture} />
-                </div>
-              </div>
-              <div className="border-t border-line p-5 sm:p-7 lg:p-8">
-                <ProjectPoster slug={p.slug} name={p.name} />
               </div>
             </article>
           ))}

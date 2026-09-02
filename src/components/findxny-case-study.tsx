@@ -193,22 +193,24 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
 
         <SubNav />
 
-        <section className="border-b border-white/5 bg-ink/40 py-6">
+        <section className="border-b border-white/5 bg-ink/40 py-10">
           <Container>
-            <div className="font-mono text-[10px] uppercase tracking-[.18em] text-dim">System scale</div>
-            <div className="mt-3 grid sm:grid-cols-2 lg:grid-cols-5">
-              {project.metrics.map((m, i) => (
-                <div key={m} className={`py-2 sm:px-6 sm:py-0 ${i > 0 ? "sm:border-l sm:border-white/5" : ""}`}>
-                  <div className="text-base font-semibold tracking-tight">{m}</div>
+            <div className="grid gap-10 lg:grid-cols-2">
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[.18em] text-dim">System scale — quantitative</div>
+                <div className="mt-4 space-y-2.5">
+                  {project.metrics.map((m) => (
+                    <div key={m} className="text-lg font-semibold tracking-tight text-text/90">{m}</div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div className="mt-6 border-t border-white/5 pt-6">
-              <div className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">My ownership</div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {["Offline sync & idempotent replay", "Payment webhooks & dedup", "Tenant/role access (RLS)", "POS hardware integrations"].map((o) => (
-                  <span key={o} className="rounded-full border border-cyan/20 bg-cyan/5 px-3 py-1.5 text-xs font-medium text-text">{o}</span>
-                ))}
+              </div>
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">My ownership — what I personally built</div>
+                <div className="mt-4">
+                  {(project.ownership ?? []).map((o) => (
+                    <div key={o} className="border-b border-white/5 py-2.5 text-sm text-muted-bright last:border-b-0">{o}</div>
+                  ))}
+                </div>
               </div>
             </div>
           </Container>
@@ -216,26 +218,22 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
 
         <section id="overview" className="section-anchor py-20">
           <Container>
-            <SectionLabel>Overview</SectionLabel>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-2xl border border-line bg-panel p-5">
-                <div className="font-mono text-xs text-cyan">PROBLEM</div>
-                <p className="mt-2 text-sm leading-6 text-muted-bright">Restaurants and cafés still need to sell when the internet drops, and one platform has to run more than one tenant business.</p>
-              </div>
-              <div className="rounded-2xl border border-line bg-panel p-5">
-                <div className="font-mono text-xs text-cyan">PRODUCT</div>
-                <p className="mt-2 text-sm leading-6 text-muted-bright">A multi-tenant web storefront, admin back office, Expo POS/kitchen app, and shared Supabase/Postgres backend.</p>
-              </div>
-              <div className="rounded-2xl border border-line bg-panel p-5">
-                <div className="font-mono text-xs text-cyan">MY ROLE</div>
-                <p className="mt-2 text-sm leading-6 text-muted-bright">Offline sync, payment webhooks, tenant/role access boundaries, and POS hardware integrations.</p>
-              </div>
-              <div className="rounded-2xl border border-line bg-panel p-5">
-                <div className="font-mono text-xs text-cyan">RESULT</div>
-                <p className="mt-2 text-sm leading-6 text-muted-bright">Cashiers keep transacting offline and reconcile safely on reconnect — running a real business today.</p>
-              </div>
+            <div className="font-mono text-xs uppercase tracking-[.18em] text-dim">The project in 30 seconds</div>
+            <div className="mt-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+              {[
+                { n: "01", label: "Problem", text: "Restaurants and cafés still need to sell when the internet drops, and one platform has to run more than one tenant business." },
+                { n: "02", label: "Product", text: "A multi-tenant web storefront, admin back office, Expo POS/kitchen app, and shared Supabase/Postgres backend." },
+                { n: "03", label: "My role", text: "Offline sync, payment webhooks, tenant/role access boundaries, and POS hardware integrations." },
+                { n: "04", label: "Result", text: "Cashiers keep transacting offline and reconcile safely on reconnect — running a real business today." },
+              ].map((s, i) => (
+                <div key={s.n} className={`lg:pr-8 ${i > 0 ? "lg:border-l lg:border-white/5 lg:pl-8" : ""}`}>
+                  <div className="font-mono text-sm text-cyan">{s.n}</div>
+                  <div className="mt-2 text-lg font-semibold">{s.label}</div>
+                  <p className="mt-2 text-sm leading-6 text-muted-bright">{s.text}</p>
+                </div>
+              ))}
             </div>
-            <div className="mt-10 grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+            <div className="mt-16 grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
               <div>
                 <h2 className="text-3xl font-bold">What I worked on</h2>
                 <p className="mt-4 text-sm leading-6 text-muted-bright">
@@ -280,11 +278,13 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
               Mugthemug is a 24/7 café, restaurant, and staycation lounge in Angono, Rizal, running on the customer
               (customer) surface of this platform. Its footer reads &ldquo;Powered by FINDXNY.&rdquo;
             </p>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <ShotFrame src="/projects/findxny-os/storefront.jpg" alt="Mugthemug storefront signage, powered by FINDXNY" caption="Storefront — the FINDXNY tenant behind the counter" />
-              <ShotFrame src="/projects/findxny-os/order-menu.jpg" alt="Mugthemug menu ordering interface" caption="Menu & ordering — category filters, cart, live pricing" />
-              <ShotFrame src="/projects/findxny-os/staycation.jpg" alt="Mugthemug staycation lofts" caption="Staycation booking — the resource/booking domain" />
-              <ShotFrame src="/projects/findxny-os/order-tracker.jpg" alt="Mugthemug order and booking tracker" caption="Order & booking tracker — public-track-order / public-track-booking" />
+            <div className="mt-8">
+              <ShotFrame ratio="aspect-[16/9]" src="/projects/findxny-os/storefront.jpg" alt="Mugthemug storefront signage, powered by FINDXNY" caption="Storefront — the FINDXNY tenant behind the counter" />
+            </div>
+            <div className="mt-4 grid gap-4 sm:grid-cols-3">
+              <ShotFrame src="/projects/findxny-os/order-menu.jpg" alt="Mugthemug menu ordering interface" caption="Menu & ordering" />
+              <ShotFrame src="/projects/findxny-os/staycation.jpg" alt="Mugthemug staycation lofts" caption="Staycation booking" />
+              <ShotFrame src="/projects/findxny-os/order-tracker.jpg" alt="Mugthemug order and booking tracker" caption="Order & booking tracker" />
             </div>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <div className="rounded-xl border border-line bg-panel p-5">
@@ -330,11 +330,12 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
                 Live walkthrough — order entry, offline mode, checkout, and the kitchen prep board on the actual tablet build.
               </div>
             </div>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-order-offline.jpg" alt="POS order screen with offline banner: product orders queued, bookings disabled" caption="Order entry — the offline banner here is the offline-first queue from the section above, not a mockup" />
-              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-dashboard.jpg" alt="Mugthemug POS owner dashboard with live orders, bookings, and payment split" caption="Owner dashboard — live orders, booking snapshot, payment-method split" />
-              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-payment.jpg" alt="POS checkout screen with Cash, GCash, Maya, Card, QRPh, and Bank options" caption="Checkout — full/partial/split payment across Cash, GCash, Maya, Card, QRPh, Bank" />
-              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-kitchen-display.jpg" alt="Kitchen prep display with New, Preparing, and Ready columns" caption="Kitchen prep display — per-station tickets moving New → Preparing → Ready" />
+            <div className="mt-4 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Supporting screens</div>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-order-offline.jpg" alt="POS order screen with offline banner: product orders queued, bookings disabled" caption="Order entry — offline" />
+              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-dashboard.jpg" alt="Mugthemug POS owner dashboard with live orders, bookings, and payment split" caption="Owner dashboard" />
+              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-payment.jpg" alt="POS checkout screen with Cash, GCash, Maya, Card, QRPh, and Bank options" caption="Checkout" />
+              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-kitchen-display.jpg" alt="Kitchen prep display with New, Preparing, and Ready columns" caption="Kitchen prep display" />
             </div>
           </Container>
         </section>
