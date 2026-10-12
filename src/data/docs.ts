@@ -45,7 +45,7 @@ export const docPdfPath = (slug: string) => `/docs/${docFile(slug)}`;
 export const isDocSlug = (s: string): s is DocSlug => (DOC_SLUGS as readonly string[]).includes(s);
 
 const SCOPE_NOTE =
-  "Counts such as \"114 Edge Functions\" describe the whole platform, not only Prince's own work. His own contributions are the areas of ownership listed in this section.";
+  "Counts such as \"115 Edge Functions\" describe the whole platform, not only Prince's own work. His own contributions are the areas of ownership listed in this section.";
 // "POS & OPERATIONS PLATFORM" -> "POS & operations platform": keep short acronyms, lowercase the rest.
 const sentenceCase = (s: string) => {
   const out = s.split(" ").map((w) => (/^[A-Z&·]{1,4}$/.test(w) ? w : w.toLowerCase())).join(" ");

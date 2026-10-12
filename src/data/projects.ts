@@ -21,11 +21,11 @@ export const projects: Project[] = [
     index: "01",
     eyebrow: "POS & OPERATIONS PLATFORM",
     name: "FINDXNY OS",
-    summary: "A multi-tenant POS and booking platform spanning web, Expo cashier terminals, Supabase backend infrastructure, offline workflows, payments, and physical POS hardware.",
+    summary: "A multi-tenant POS and booking platform spanning the Android POS app (FINDXNY OS), a companion website with the same functions, Expo cashier terminals, Supabase backend infrastructure, offline workflows, payments, and physical POS hardware.",
     period: "May 2026 – Jul 2026",
     role: "Junior Full-Stack Engineer",
     stack: ["Next.js", "React Native", "Expo", "Supabase", "PostgreSQL", "Deno", "Xendit", "EAS"],
-    metrics: ["114 Edge Functions", "119 DB migrations", "56 tables · 121 FKs", "Offline SQLite queue", "ESC/POS + cash drawer"],
+    metrics: ["115 Edge Functions", "119 DB migrations", "56 tables · 121 FKs", "Offline SQLite queue", "ESC/POS + cash drawer"],
     highlights: [
       "Designed workspace-, branch-, and role-based access for owners, admins, managers, cashiers, and kitchen staff, enforced by PostgreSQL RLS and shared permission-group checks in every Edge Function.",
       "Built a SQLite-backed offline sync queue (orders, payments, shift actions) with idempotency keys, a capped retry count, and a stuck-order recovery view for unreliable connectivity.",

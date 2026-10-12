@@ -136,7 +136,7 @@ export function Hero() {
 export function Snapshot() {
   const items = [
     ["3", "Production platforms"],
-    ["114", "Edge Functions on FINDXNY OS"],
+    ["115", "Edge Functions on FINDXNY OS"],
     ["119", "Database migrations"],
     ["Web · Mobile · POS", "Plus payments & hardware"],
   ];

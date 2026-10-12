@@ -281,7 +281,7 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
               <div className="arch-arrow py-1">↓ business rules never run on the client</div>
               <div className="arch-tier">
                 <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Application layer</div>
-                <div className="arch-node cyan">114 Deno Edge Functions — auth · catalog · orders · bookings · payments · staff · reports</div>
+                <div className="arch-node cyan">115 Deno Edge Functions — auth · catalog · orders · bookings · payments · staff · reports</div>
               </div>
               <div className="arch-arrow py-1">↓</div>
               <div className="grid gap-3 sm:grid-cols-2">

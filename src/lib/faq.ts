@@ -28,7 +28,7 @@ const lalaba = project("lalaba");
 const athlete = project("athlete-central");
 
 const SCOPE_NOTE =
-  "Numbers such as 114 Edge Functions describe the whole platform, not only Prince's own work. His own contributions are the areas of ownership listed for each project.";
+  "Numbers such as 115 Edge Functions describe the whole platform, not only Prince's own work. His own contributions are the areas of ownership listed for each project.";
 
 function projectAnswer(slug: string) {
   const p = project(slug);
@@ -141,7 +141,7 @@ const ENTRIES: Entry[] = [
   { id: "athlete", keywords: [["athlete", 3], "sports", "court", "facility", ["booking platform", 2]], answer: `${projectAnswer("athlete-central")}\n\nNo in-progress or planned items are documented for this project, and product screenshots aren't published yet.` },
   { id: "ownership", generic: true, keywords: [["personally", 3], ["personal", 1], ["own!", 1], ["owned", 2], "ownership", ["responsible", 3], ["contribution", 3], ["contributed", 3], ["what did prince do", 3], ["his role", 2], ["did he build", 2], ["did prince build", 2], ["did he write", 2], ["did prince write", 2]],
     answer: `${SCOPE_NOTE}\n\nAreas of ownership:\n- ${findxny.name}: ${findxny.ownership!.join("; ")}\n- ${lalaba.name}: ${lalaba.ownership!.join("; ")}\n- ${athlete.name}: ${athlete.highlights.map(firstSentence).join(" ")}` },
-  { id: "platform-scale", keywords: [["114", 4], ["edge function", 4], ["migrations", 2], ["how many", 2], ["tables", 3], "resolvers", ["scale", 1], ["foreign keys", 3], ["schemas", 2]],
+  { id: "platform-scale", keywords: [["115", 4], ["edge function", 4], ["migrations", 2], ["how many", 2], ["tables", 3], "resolvers", ["scale", 1], ["foreign keys", 3], ["schemas", 2]],
     answer: `${findxny.name} platform scale: ${findxny.metrics.join("; ")}. ${SCOPE_NOTE} For FINDXNY OS, Prince's areas of ownership were: ${findxny.ownership!.join("; ")}.` },
   { id: "offline", keywords: [["offline", 3], ["sqlite", 3], ["synchroniz", 3], ["sync", 2], "queue", ["idempoten", 2], "reconnect", "retry", ["no internet", 3], ["internet drops", 3]],
     answer: `Offline in FINDXNY OS: ${findxny.highlights[1]}\n\nDecision: ${findxny.decisions[0].decision} ${findxny.decisions[0].why}\n\nCase study: /projects/findxny-os` },

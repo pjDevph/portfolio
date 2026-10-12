@@ -142,7 +142,7 @@ export const automations: Automation[] = [
     ],
     safeguards: [
       { title: "Grounded answers only", text: "Rules require answering only from the knowledge base, never inventing employers, dates, metrics, or links, and saying so when it doesn't know." },
-      { title: "Scope vs. ownership", text: "Platform counts (for example 114 Edge Functions) are described as platform scale; my own contributions come from the listed areas of ownership." },
+      { title: "Scope vs. ownership", text: "Platform counts (for example 115 Edge Functions) are described as platform scale; my own contributions come from the listed areas of ownership." },
       { title: "Untrusted input", text: "Visitor text can't change the rules, roles are validated server-side, and only user and assistant turns are accepted from the browser." },
       { title: "Abuse and cost limits", text: "Messages are capped at 600 characters and 12 turns, with per-visitor and daily limits, a hard monthly spend budget enforced in code, an optional Redis-backed store so limits hold across servers, an optional Turnstile check, and a same-site origin check." },
       { title: "Answer-first FAQ and free fallback", text: "Common questions are answered from a built-in rule-based FAQ built from the same site data before any AI call. The same FAQ takes over when the monthly budget is spent, the API key is missing, or the provider fails, and the chat says so. It costs nothing and cannot invent facts, but it only covers common questions." },

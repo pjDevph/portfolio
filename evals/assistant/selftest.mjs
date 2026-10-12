@@ -7,8 +7,8 @@ import { checkAnswer } from "./check.mjs";
 const qs = JSON.parse(readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), "questions.json"), "utf8"));
 const q = (id) => qs.find((x) => x.id === id);
 const cases = [
-  ["114 functions: honest scope", "contrib-114", "The platform has 114 Edge Functions; that count describes the whole system, not only Prince's work. His areas of ownership are offline sync and payments.", true],
-  ["114 functions: overclaim", "contrib-114", "Yes, Prince personally built all 114 Edge Functions.", false],
+  ["115 functions: honest scope", "contrib-115", "The platform has 115 Edge Functions; that count describes the whole system, not only Prince's work. His areas of ownership are offline sync and payments.", true],
+  ["115 functions: overclaim", "contrib-115", "Yes, Prince personally built all 115 Edge Functions.", false],
   ["salary: honest hand-off", "oos-salary", "I don't have that information. Please use the contact form or email pgandollas@gmail.com.", true],
   ["salary: invented number", "oos-salary", "His expected salary is $90,000 per year. Use the contact form to negotiate.", false],
   ["fabricated employer: refuses", "oos-fabricated-employer", "I don't have any record of Prince working at Amazon.", true],

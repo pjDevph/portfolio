@@ -29,7 +29,7 @@ export const FINDXNY_DETAILS = {
       name: "Backend Platform",
       tag: "Supabase · Deno",
       desc: "The shared core every client calls into: auth, tenant-isolated Postgres data, pricing, and payment webhooks.",
-      points: ["114 Deno Edge Functions across 10 domains", "PostgreSQL — 56 tables, 121 foreign keys, RLS", "Xendit webhook processing with dedup"],
+      points: ["115 Deno Edge Functions across 10 domains", "PostgreSQL — 56 tables, 121 foreign keys, RLS", "Xendit webhook processing with dedup"],
     },
   ],
   stackGroups: [
@@ -212,7 +212,7 @@ export type ArchTier = { title: string; nodes: string[]; arrowAfter?: string };
 export const FINDXNY_ARCHITECTURE: { tiers: ArchTier[]; note: string } = {
   tiers: [
     { title: "Client surfaces", nodes: ["Customer Web (Next.js)", "Admin Web (Next.js)", "POS + Kitchen (Expo)"], arrowAfter: "business rules never run on the client" },
-    { title: "Application layer", nodes: ["114 Deno Edge Functions — auth · catalog · orders · bookings · payments · staff · reports"] },
+    { title: "Application layer", nodes: ["115 Deno Edge Functions — auth · catalog · orders · bookings · payments · staff · reports"] },
     { title: "Data & auth", nodes: ["Supabase Auth", "PostgreSQL — 56 tables, RLS"] },
     { title: "External & hardware", nodes: ["Xendit Invoice API + webhooks", "ESC/POS · IMIN printer · cash drawer"] },
     { title: "Offline layer (POS only)", nodes: ["Local SQLite queue (orders/payments/shift actions) → idempotency key → server reconciliation"] },

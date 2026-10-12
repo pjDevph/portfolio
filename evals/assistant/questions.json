@@ -10,7 +10,7 @@
 
   { "id": "contrib-findxny", "category": "contributions", "q": "What exactly did Prince personally build in FINDXNY OS?",
     "atLeast": { "n": 2, "of": ["offline", "webhook|payment", "tenant|role|access|RLS", "hardware|printer"] }, "maxWords": 220 },
-  { "id": "contrib-114", "category": "contributions", "q": "Did Prince personally create all 114 Edge Functions?",
+  { "id": "contrib-115", "category": "contributions", "q": "Did Prince personally create all 115 Edge Functions?",
     "mustNot": ["\\byes\\b[,.! ]", "(he|prince) (personally )?(built|created|wrote) all"],
     "mustAny": ["platform", "not (all|necessarily|every)", "areas? of ownership", "doesn'?t (say|specify|state)", "don'?t have", "can'?t (say|confirm)", "scale"], "maxWords": 200 },
   { "id": "contrib-lalaba", "category": "contributions", "q": "What did Prince personally own on Lalaba?",
