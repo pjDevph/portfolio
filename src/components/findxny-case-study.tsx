@@ -3,6 +3,9 @@ import { ProductComposition } from "@/components/poster-placeholder";
 import type { Project } from "@/data/projects";
 import Link from "next/link";
 import Image from "next/image";
+import { ShotGallery } from "@/components/lightbox";
+import { DocLink } from "@/components/doc-link";
+import { FINDXNY_DETAILS } from "@/data/project-details";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -17,6 +20,7 @@ import {
   ReceiptText,
 } from "lucide-react";
 
+const STOREFRONT = FINDXNY_DETAILS.storefront;
 const GITHUB_URL = "https://github.com/pjDevph/findxny-os-showcase";
 
 const SUBNAV = [
@@ -29,118 +33,18 @@ const SUBNAV = [
   ["repo", "Repository"],
 ];
 
-const PRODUCT_SURFACES = [
-  {
-    icon: Monitor,
-    name: "Customer Web",
-    tag: "Next.js",
-    desc: "Public storefront for a FINDXNY tenant — menu browsing, cart, staycation booking, and an order/booking tracker.",
-    points: ["(customer) route group in the Next.js app", "Menu, staycation booking, order tracking pages", "Tenant-branded deployment (mugthemug.ph)"],
-  },
-  {
-    icon: ShieldCheck,
-    name: "Admin Web",
-    tag: "Next.js · role-gated",
-    desc: "A separate (admin) route group in the same Next.js app for catalog, staff, reports, and workspace settings.",
-    points: ["Product/catalog, inventory & costing management", "Staff, roles, and audit log views", "Sales reports and Z-report review"],
-  },
-  {
-    icon: Smartphone,
-    name: "POS + Kitchen App",
-    tag: "Expo · React Native",
-    desc: "The terminal cashiers and kitchen staff use — order entry, kitchen tickets, shifts, and hardware I/O, in one app.",
-    points: ["Offline-first checkout via a local SQLite queue", "ESC/POS + IMIN thermal printing, physical cash drawer", "Shift management, kitchen ticket board, secondary display"],
-  },
-  {
-    icon: Cloud,
-    name: "Backend Platform",
-    tag: "Supabase · Deno",
-    desc: "The shared core every client calls into: auth, tenant-isolated Postgres data, pricing, and payment webhooks.",
-    points: ["114 Deno Edge Functions across 10 domains", "PostgreSQL — 56 tables, 121 foreign keys, RLS", "Xendit webhook processing with dedup"],
-  },
-];
+const SURFACE_ICONS = { "Customer Web": Monitor, "Admin Web": ShieldCheck, "POS + Kitchen App": Smartphone, "Backend Platform": Cloud } as Record<string, typeof Monitor>;
+const PRODUCT_SURFACES = FINDXNY_DETAILS.surfaces.map((s) => ({ ...s, icon: SURFACE_ICONS[s.name] }));
 
-const STACK_GROUPS = [
-  { label: "Web", items: ["Next.js 14", "React 18", "Tailwind CSS 4"] },
-  { label: "POS Client", items: ["Expo (React Native 0.83)", "expo-router", "expo-sqlite"] },
-  { label: "Backend", items: ["Deno Edge Functions", "Supabase"] },
-  { label: "Data & Auth", items: ["PostgreSQL", "Row-Level Security", "Supabase Auth"] },
-  { label: "Payments", items: ["Xendit Invoice API", "Webhooks"] },
-  { label: "Testing & Delivery", items: ["Vitest", "Playwright", "EAS Build/Update"] },
-  { label: "POS Hardware", items: ["ESC/POS (USB/Bluetooth)", "IMIN thermal SDK", "Native cash drawer"] },
-];
+const STACK_GROUPS = FINDXNY_DETAILS.stackGroups;
 
-const FEATURE_GROUPS = [
-  {
-    label: "Customer & Booking",
-    items: [
-      "Public storefront, menu, and cart per tenant (e.g. mugthemug.ph)",
-      "Staycation/resource booking with holds, check-in/out, and reschedule",
-      "Order & booking tracker by order number + mobile number",
-    ],
-  },
-  {
-    label: "POS & Kitchen",
-    items: [
-      "Order entry, per-item kitchen routing, and a live kitchen ticket board",
-      "Shift open/close, clock-in/out, and per-shift cash-drawer reconciliation",
-      "Loyalty points, vouchers, and manager-approval overrides for voids/refunds",
-    ],
-  },
-  {
-    label: "Platform & Access",
-    items: [
-      "Multi-tenant workspace → branch model enforced by PostgreSQL RLS",
-      "Owner / admin / manager / cashier / kitchen roles via named permission groups",
-      "PIN-based staff login with rate-limited auth attempts (no plaintext PINs stored)",
-    ],
-  },
-  {
-    label: "Payments & Operations",
-    items: [
-      "Xendit Invoice checkout (GCash, Maya, card, QRPh) plus a separate pay-at-counter cash flow",
-      "Idempotency-Key handling on mutating endpoints, with request-hash collision detection",
-      "Z-reports, sales analytics, inventory/stock adjustments, and expense tracking",
-    ],
-  },
-];
+const FEATURE_GROUPS = FINDXNY_DETAILS.featureGroups;
 
-const OFFLINE_FLOW = [
-  "Cashier checks out; order and payment bodies are written to local SQLite tables first",
-  "If offline, the operation queues with a generated idempotency key",
-  "A background sync service replays the queue on reconnect — orders, payments, then shift actions",
-  "The server validates each idempotency key before applying it, so a resent order can't double-post",
-  "An order that fails 8 times surfaces to the cashier as \"stuck\" instead of retrying forever",
-];
+const OFFLINE_FLOW = FINDXNY_DETAILS.offlineFlow;
 
-const PAYMENT_FLOW = [
-  "payments-create-intent computes the total server-side and opens a Xendit Invoice (or routes to the cash-at-counter flow)",
-  "Xendit hosts checkout across GCash, Maya, card, and QRPh behind one invoice",
-  "Xendit calls payments-webhook on completion",
-  "The handler inserts into webhook_events first — a unique constraint on (invoice, status) lets exactly one delivery win and silently drops retries",
-  "payment_intents, then the order or booking, are updated — paid orders auto-spawn a kitchen ticket for kitchen-required items",
-  "A transaction + receipt row is recorded, and a booking receipt is emailed automatically when a guest email is on file",
-];
+const PAYMENT_FLOW = FINDXNY_DETAILS.paymentFlow;
 
-const SCHEMA_DOMAINS = [
-  { name: "WORKSPACE & ACCESS", tables: ["workspaces", "branches", "workspace_members", "profiles", "pos_devices"] },
-  { name: "ORDERS & KITCHEN", tables: ["orders", "order_items", "order_charges", "kitchen_tickets", "receipts"] },
-  { name: "PAYMENTS & TRANSACTIONS", tables: ["payment_intents", "payments", "transactions", "refunds"] },
-  { name: "BOOKINGS & RESOURCES", tables: ["bookings", "bookable_resources", "resource_blocks"] },
-  { name: "SHIFTS & CASH MANAGEMENT", tables: ["shifts", "shift_events", "cash_drawer_events", "z_reports"] },
-  { name: "CATALOG & INVENTORY", tables: ["products", "product_variants", "inventory_items", "stock_movements"] },
-];
-
-function ShotFrame({ src, alt, caption, ratio = "aspect-[4/3]" }: { src: string; alt: string; caption: string; ratio?: string }) {
-  return (
-    <figure className="overflow-hidden rounded-2xl border border-line bg-panel">
-      <div className={`relative ${ratio}`}>
-        <Image src={src} alt={alt} fill className="object-cover" sizes="(min-width: 1024px) 25vw, 50vw" />
-      </div>
-      <figcaption className="border-t border-line px-3 py-2.5 text-xs leading-5 text-muted-bright">{caption}</figcaption>
-    </figure>
-  );
-}
+const SCHEMA_DOMAINS = FINDXNY_DETAILS.schemaDomains;
 
 function SubNav() {
   return (
@@ -170,15 +74,22 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
               <p className="mt-6 max-w-3xl text-xl leading-8 text-muted">{project.summary}</p>
 
               <div className="mt-7 flex flex-wrap gap-3">
-                <a href="https://mugthemug.ph" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-text px-4 py-2.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5">
-                  Visit live storefront <ArrowUpRight size={15} />
-                </a>
+                {STOREFRONT.live ? (
+                  <a href={STOREFRONT.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-text px-4 py-2.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5">
+                    Visit live storefront <ArrowUpRight size={15} />
+                  </a>
+                ) : (
+                  <span aria-disabled="true" title="The public storefront is temporarily offline" className="inline-flex cursor-not-allowed items-center gap-2 rounded-full border border-dashed border-line px-4 py-2.5 text-sm text-dim">
+                    Live storefront: temporarily offline
+                  </span>
+                )}
                 <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm text-muted transition hover:border-cyan/70 hover:text-cyan">
                   <Github size={14} />View on GitHub
                 </a>
                 <a href="#architecture" className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm text-muted transition hover:border-cyan/70 hover:text-cyan">
                   Jump to architecture
                 </a>
+                <DocLink slug="findxny-os" />
               </div>
 
               <div className="mt-8 grid gap-5 border-y border-line py-6 sm:grid-cols-3">
@@ -201,7 +112,7 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
                 { n: "01", label: "Problem", text: "Restaurants and cafés still need to sell when the internet drops, and one platform has to run more than one tenant business." },
                 { n: "02", label: "Product", text: "A multi-tenant web storefront, admin back office, Expo POS/kitchen app, and shared Supabase/Postgres backend." },
                 { n: "03", label: "My role", text: "Offline sync, payment webhooks, tenant/role access boundaries, and POS hardware integrations." },
-                { n: "04", label: "Result", text: "Cashiers keep transacting offline and reconcile safely on reconnect — running a real business today." },
+                { n: "04", label: "Result", text: "Cashiers keep transacting offline and reconcile safely on reconnect — used by a real business." },
               ].map((s, i) => (
                 <div key={s.n} className={`lg:pr-8 ${i > 0 ? "lg:border-l lg:border-white/5 lg:pl-8" : ""}`}>
                   <div className="font-mono text-sm text-cyan">{s.n}</div>
@@ -278,38 +189,44 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
         <section className="py-20">
           <Container>
             <SectionLabel>Production implementation</SectionLabel>
-            <h2 className="text-3xl font-bold">Mugthemug — a live FINDXNY tenant</h2>
+            <h2 className="text-3xl font-bold">{STOREFRONT.live ? "Mugthemug — a live FINDXNY tenant" : "Mugthemug — a FINDXNY tenant"}</h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-bright">
-              Mugthemug is a 24/7 café, restaurant, and staycation lounge in Angono, Rizal, running on the customer
+              Mugthemug is a 24/7 café, restaurant, and staycation lounge in Angono, Rizal, {STOREFRONT.live ? "running" : "whose public storefront has run"} on the customer
               (customer) surface of this platform. Its footer reads &ldquo;Powered by FINDXNY.&rdquo;
             </p>
-            <div className="mt-8">
-              <ShotFrame ratio="aspect-[16/9]" src="/projects/findxny-os/storefront.jpg" alt="Mugthemug storefront signage, powered by FINDXNY" caption="Storefront — the FINDXNY tenant behind the counter" />
-            </div>
-            <div className="mt-4 grid gap-4 sm:grid-cols-3">
-              <ShotFrame src="/projects/findxny-os/order-menu.jpg" alt="Mugthemug menu ordering interface" caption="Menu & ordering" />
-              <ShotFrame src="/projects/findxny-os/staycation.jpg" alt="Mugthemug staycation lofts" caption="Staycation booking" />
-              <ShotFrame src="/projects/findxny-os/order-tracker.jpg" alt="Mugthemug order and booking tracker" caption="Order & booking tracker" />
-            </div>
+            <ShotGallery
+              ratio="aspect-[4/5]"
+              className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+              shots={[
+                { src: "/projects/findxny-os/storefront.jpg", alt: "Mugthemug storefront signage, powered by FINDXNY", caption: "Storefront — the FINDXNY tenant behind the counter", width: 800, height: 1200 },
+                { src: "/projects/findxny-os/order-menu.jpg", alt: "Mugthemug menu ordering interface", caption: "Menu & ordering", width: 960, height: 1200 },
+                { src: "/projects/findxny-os/staycation.jpg", alt: "Mugthemug staycation lofts", caption: "Staycation booking", width: 800, height: 1200 },
+                { src: "/projects/findxny-os/order-tracker.jpg", alt: "Mugthemug order and booking tracker", caption: "Order & booking tracker", width: 1200, height: 975 },
+              ]}
+            />
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <div className="rounded-xl border border-line bg-panel p-5">
                 <div className="font-mono text-xs text-cyan">CURRENT STATUS</div>
                 <p className="mt-2 text-sm leading-6 text-muted-bright">
-                  Online food ordering and staycation booking are currently paused on the live site — customers
-                  message or call to inquire. The order/booking tracker stays available.
+                  {STOREFRONT.live
+                    ? "Online food ordering and staycation booking are currently paused on the live site — customers message or call to inquire. The order/booking tracker stays available."
+                    : "The public storefront is temporarily offline, so the link is disabled for now. Online food ordering and staycation booking had been paused, and the screenshots above show how the storefront looked."}
                 </p>
               </div>
               <div className="rounded-xl border border-line bg-panel p-5">
                 <div className="font-mono text-xs text-cyan">WHY IT MATTERS</div>
                 <p className="mt-2 text-sm leading-6 text-muted-bright">
-                  This isn&apos;t a demo tenant — it&apos;s a real business running its storefront and order/booking
-                  tracking on infrastructure this project built.
+                  {STOREFRONT.live
+                    ? "This isn't a demo tenant — it's a real business running its storefront and order/booking tracking on infrastructure this project built."
+                    : "This was never a demo tenant: it is a real business's storefront and order/booking tracking, built on infrastructure this project provided."}
                 </p>
               </div>
             </div>
-            <a href="https://mugthemug.ph" target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm font-semibold transition hover:border-cyan/70 hover:text-cyan">
-              Visit mugthemug.ph <ExternalLink size={15} />
-            </a>
+            {STOREFRONT.live && (
+              <a href={STOREFRONT.url} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm font-semibold transition hover:border-cyan/70 hover:text-cyan">
+                Visit mugthemug.ph <ExternalLink size={15} />
+              </a>
+            )}
           </Container>
         </section>
 
@@ -336,12 +253,15 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
               </div>
             </div>
             <div className="mt-4 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Supporting screens</div>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-order-offline.jpg" alt="POS order screen with offline banner: product orders queued, bookings disabled" caption="Order entry — offline" />
-              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-dashboard.jpg" alt="Mugthemug POS owner dashboard with live orders, bookings, and payment split" caption="Owner dashboard" />
-              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-payment.jpg" alt="POS checkout screen with Cash, GCash, Maya, Card, QRPh, and Bank options" caption="Checkout" />
-              <ShotFrame ratio="aspect-[8/5]" src="/projects/findxny-os/pos-kitchen-display.jpg" alt="Kitchen prep display with New, Preparing, and Ready columns" caption="Kitchen prep display" />
-            </div>
+            <ShotGallery
+              className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+              shots={[
+                { src: "/projects/findxny-os/pos-order-offline.jpg", alt: "POS order screen with offline banner: product orders queued, bookings disabled", caption: "Order entry — offline", width: 1400, height: 875 },
+                { src: "/projects/findxny-os/pos-dashboard.jpg", alt: "Mugthemug POS owner dashboard with live orders, bookings, and payment split", caption: "Owner dashboard", width: 1400, height: 875 },
+                { src: "/projects/findxny-os/pos-payment.jpg", alt: "POS checkout screen with Cash, GCash, Maya, Card, QRPh, and Bank options", caption: "Checkout", width: 1400, height: 875 },
+                { src: "/projects/findxny-os/pos-kitchen-display.jpg", alt: "Kitchen prep display with New, Preparing, and Ready columns", caption: "Kitchen prep display", width: 1400, height: 875 },
+              ]}
+            />
           </Container>
         </section>
 
@@ -535,9 +455,9 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
                 <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">View repository ↗</a>
               </div>
               <div className="rounded-2xl border border-line bg-panel p-6">
-                <div className="flex items-center gap-2 text-sm font-semibold"><ExternalLink size={15} className="text-dim" />Live storefront</div>
-                <p className="mt-2 text-sm leading-6 text-muted-bright">A production tenant is public at mugthemug.ph.</p>
-                <a href="https://mugthemug.ph" target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">Visit ↗</a>
+                <div className="flex items-center gap-2 text-sm font-semibold"><ExternalLink size={15} className="text-dim" />{STOREFRONT.live ? "Live storefront" : "Storefront"}</div>
+                <p className="mt-2 text-sm leading-6 text-muted-bright">{STOREFRONT.live ? "A production tenant is public at mugthemug.ph." : "A production tenant's public storefront. It is temporarily offline, so the link is disabled for now."}</p>
+                {STOREFRONT.live && <a href={STOREFRONT.url} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">Visit ↗</a>}
               </div>
               <div className="rounded-2xl border border-line bg-panel p-6">
                 <div className="text-sm font-semibold">What I owned</div>

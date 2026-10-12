@@ -1,0 +1,37 @@
+{
+  "findxny-os": {
+    "file": "findxny-os-documentation.pdf",
+    "hash": "07c50e76f20dbcaa",
+    "pages": 7,
+    "kb": 426,
+    "generated": "2026-10-12"
+  },
+  "lalaba": {
+    "file": "lalaba-documentation.pdf",
+    "hash": "21371063c0b91216",
+    "pages": 7,
+    "kb": 407,
+    "generated": "2026-10-12"
+  },
+  "athlete-central": {
+    "file": "athlete-central-documentation.pdf",
+    "hash": "0f8f4135766c14c9",
+    "pages": 5,
+    "kb": 386,
+    "generated": "2026-10-12"
+  },
+  "findxny-sheets-reporting": {
+    "file": "findxny-sheets-reporting-documentation.pdf",
+    "hash": "8d91b714ad33fad7",
+    "pages": 8,
+    "kb": 1287,
+    "generated": "2026-10-12"
+  },
+  "portfolio-assistant": {
+    "file": "portfolio-assistant-documentation.pdf",
+    "hash": "ceff9a7b551588b3",
+    "pages": 4,
+    "kb": 318,
+    "generated": "2026-10-12"
+  }
+}

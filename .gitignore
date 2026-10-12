@@ -27,3 +27,6 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# Assistant evaluation transcripts
+evals/assistant/results/

@@ -11,7 +11,7 @@ const config: Config = {
         line: "#243044",
         text: "#F8FAFC",
         muted: "#94A3B8",
-        dim: "#64748B",
+        dim: "#7A8BA6",
         cyan: "#38BDF8",
         violet: "#818CF8",
         success: "#34D399"

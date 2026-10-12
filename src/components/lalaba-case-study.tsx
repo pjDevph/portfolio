@@ -1,6 +1,8 @@
 import { Container, Header, Footer, SectionLabel } from "@/components/site";
 import { ProjectPoster } from "@/components/poster-placeholder";
 import { ProductCarousel } from "@/components/product-carousel";
+import { DocLink } from "@/components/doc-link";
+import { LALABA_DETAILS } from "@/data/project-details";
 import { LALABA_SLIDES } from "@/data/lalaba-slides";
 import type { Project } from "@/data/projects";
 import Link from "next/link";
@@ -19,13 +21,7 @@ import {
   Users,
 } from "lucide-react";
 
-const REPOS = [
-  { name: "Backend", url: "https://github.com/pjDevph/lalaba-backend-showcase" },
-  { name: "Customer app", url: "https://github.com/pjDevph/lalaba-customer-showcase" },
-  { name: "Partner app", url: "https://github.com/pjDevph/lalaba-partner-showcase" },
-  { name: "Admin panel", url: "https://github.com/pjDevph/lalaba-admin-showcase" },
-  { name: "Website", url: "https://github.com/pjDevph/lalaba-website-showcase" },
-];
+const REPOS = LALABA_DETAILS.repos;
 
 const SUBNAV = [
   ["overview", "Overview"],
@@ -38,111 +34,16 @@ const SUBNAV = [
   ["repo", "Repository"],
 ];
 
-const PRODUCT_SURFACES = [
-  {
-    icon: Smartphone,
-    name: "Customer App",
-    tag: "Expo · React Native",
-    desc: "The app end customers use to find laundry providers, book pickup/delivery, and pay from an in-app wallet.",
-    points: ["Firebase Auth (JS SDK) + App Check", "Google Maps for provider discovery", "Custom fetch-based GraphQL client — no Apollo/codegen"],
-    image: "/projects/lalaba/customer-app.jpg",
-  },
-  {
-    icon: Smartphone,
-    name: "Partner App",
-    tag: "Expo · React Native",
-    desc: "The app laundromats, home washers, and staff use — bookings, verification, and device-gated access.",
-    points: ["Camera + face detection + biometrics for verification/KYC", "Branch-scoped staff device approval", "QR-code support for pickup/handoff flows"],
-    image: "/projects/lalaba/partner-app.jpg",
-  },
-  {
-    icon: Monitor,
-    name: "Admin Panel",
-    tag: "Next.js",
-    desc: "Internal operations console — 29 feature routes mirroring the backend's own module boundaries.",
-    points: ["Merchants, orders, wallets, promotions, campaigns, booking-policy", "Hand-written GraphQL query/mutation layer (no client library)", "Role/permission management UI"],
-    image: "/projects/lalaba/admin-panel.jpg",
-  },
-  {
-    icon: Globe,
-    name: "Marketing Website",
-    tag: "Next.js",
-    desc: "A standalone public-facing site — intentionally has no live connection to the backend.",
-    points: ["Static marketing content only", "No auth, API, or payment logic", "Separate repo, separate deploy"],
-    image: null,
-  },
-  {
-    icon: Cloud,
-    name: "Backend Platform",
-    tag: "NestJS · Apollo GraphQL",
-    desc: "The shared API every client talks to — one backend behind both mobile apps and the admin panel.",
-    points: ["187 module directories, 57 GraphQL resolvers, 68 Mongoose schemas", "MongoDB + Redis (rate limiting/caching)", "Xendit wallet webhook, Firebase Admin SDK"],
-    image: null,
-  },
-];
+const SURFACE_ICONS = { "Customer App": Smartphone, "Partner App": Smartphone, "Admin Panel": Monitor, "Marketing Website": Globe, "Backend Platform": Cloud } as Record<string, typeof Monitor>;
+const PRODUCT_SURFACES = LALABA_DETAILS.surfaces.map((s) => ({ ...s, icon: SURFACE_ICONS[s.name] }));
 
-const STACK_GROUPS = [
-  { label: "Mobile", items: ["Expo (React Native 0.83)", "expo-router", "react-native-maps"] },
-  { label: "Web", items: ["Next.js (admin + website)", "React 19"] },
-  { label: "Backend", items: ["NestJS 11", "Apollo Server / GraphQL", "Mongoose 9"] },
-  { label: "Data & Cache", items: ["MongoDB", "Redis (ioredis)"] },
-  { label: "Auth & Trust", items: ["Firebase Auth (JS SDK)", "Firebase App Check", "Firebase Cloud Messaging"] },
-  { label: "Payments", items: ["Xendit (invoice + webhook)"] },
-  { label: "Verification", items: ["react-native-vision-camera", "Face detection", "Biometrics"] },
-  { label: "Delivery", items: ["EAS Build/Update (dev/preview/production)"] },
-];
+const STACK_GROUPS = LALABA_DETAILS.stackGroups;
 
-const FEATURE_GROUPS = [
-  {
-    label: "Customer",
-    items: [
-      "Provider discovery on a map, booking, and order tracking",
-      "In-app wallet with Xendit-backed top-ups",
-      "Push notifications via Firebase Cloud Messaging",
-    ],
-  },
-  {
-    label: "Partner / Provider",
-    items: [
-      "Branch-scoped staff device registration and approval",
-      "Camera-based verification (face detection, biometrics) for KYC",
-      "Booking, POS, and online-order handling modules",
-    ],
-  },
-  {
-    label: "Platform & Access",
-    items: [
-      "Server-authoritative platform-fee, booking-availability, and booking-policy modules",
-      "Permission/role modules enforced at the API layer, not just the UI",
-      "Promotions and voucher redemption as first-class backend modules",
-    ],
-  },
-  {
-    label: "Admin Operations",
-    items: [
-      "29 admin routes mirroring backend module boundaries (merchants, orders, wallets, promotions, campaigns)",
-      "Booking-policy and platform-fee configuration UI",
-      "Wallet and KYC review tooling",
-    ],
-  },
-];
+const FEATURE_GROUPS = LALABA_DETAILS.featureGroups;
 
-const DEVICE_FLOW = [
-  "A staff device registers itself against a specific branch",
-  "An owner/admin approves or blocks it — status lives on the device record, not the client",
-  "Each authorization check is cached for 5 minutes to avoid hammering the DB on every request",
-  "A device is gated to a single active session — deactivating it can't be silently bypassed by the app still holding an old token",
-  "A backfill routine (onModuleInit) normalizes devices created before the status/session fields existed, so old rows don't fall through the gate unprotected",
-];
+const DEVICE_FLOW = LALABA_DETAILS.deviceFlow;
 
-const PAYMENT_FLOW = [
-  "Client requests a wallet top-up; a pending top-up intent is recorded with its own external ID",
-  "Xendit hosts the actual invoice/payment collection",
-  "Xendit calls back to POST /webhooks/xendit with an x-callback-token header",
-  "The token is compared with SHA-256 + a timing-safe comparison — no early-exit string compare that could leak timing information",
-  "On PAID/SETTLED, the amount and currency are validated against the stored intent before anything is credited",
-  "The credit itself goes through one transactional path guarded by a unique ledger index, so a retried Xendit callback returns \"already posted\" instead of crediting twice",
-];
+const PAYMENT_FLOW = LALABA_DETAILS.paymentFlow;
 
 function SubNav() {
   return (
@@ -179,6 +80,7 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
                   <span className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm text-muted">
                     <Users size={14} />Built with a small engineering team
                   </span>
+                  <DocLink slug="lalaba" />
                 </div>
 
                 <div className="mt-8 grid gap-5 border-y border-line py-6 sm:grid-cols-3">
@@ -315,7 +217,7 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
                 preload="metadata"
               />
               <div className="border-t border-line px-4 py-3 text-xs leading-5 text-muted-bright">
-                Admin panel walkthrough on the actual Next.js build — see the <a href="https://github.com/pjDevph/lalaba-admin-showcase" target="_blank" rel="noreferrer" className="text-cyan hover:underline">source ↗</a>.
+                Admin panel walkthrough on the actual Next.js build — see the <a href="https://github.com/pjDevph/lalaba-admin-showcase" target="_blank" rel="noreferrer" className="text-cyan underline underline-offset-2">source ↗</a>.
               </div>
             </div>
           </Container>

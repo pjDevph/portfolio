@@ -10,7 +10,15 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { projects } from "@/data/projects";
+import { EXPERIENCE, PROFILE } from "@/data/profile";
+import { automations } from "@/data/automations";
+import { AutomationCard } from "@/components/automation-card";
+import { MobileNav } from "@/components/mobile-nav";
+import { DocLink } from "@/components/doc-link";
+import { NAV_LINKS } from "@/data/nav";
 import { HomeCardVisual } from "@/components/poster-placeholder";
+import Image from "next/image";
+import { ContactForm } from "@/components/contact-form";
 import { ProductCarousel } from "@/components/product-carousel";
 import { LALABA_SLIDES } from "@/data/lalaba-slides";
 
@@ -22,18 +30,18 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-ink/88 backdrop-blur-xl">
       <Container className="flex h-16 items-center justify-between">
-        <Link href="/" className="text-lg font-bold tracking-tight" aria-label="Prince John Gandollas home">
+        <Link href="/" className="text-lg font-bold tracking-tight" aria-label="PJ, Prince John Gandollas home">
           PJ<span className="text-cyan">.</span>
         </Link>
         <nav className="hidden gap-7 text-sm text-muted md:flex" aria-label="Primary navigation">
-          <Link href="/#work" className="nav-link">Work</Link>
-          <Link href="/#capabilities" className="nav-link">Capabilities</Link>
-          <Link href="/#experience" className="nav-link">Experience</Link>
-          <Link href="/#contact" className="nav-link">Contact</Link>
+          {NAV_LINKS.map((l) => <Link key={l.href} href={l.href} className="nav-link">{l.label}</Link>)}
         </nav>
+        <div className="flex items-center gap-2">
+          <MobileNav />
         <Link href="/resume" className="rounded-full border border-line px-4 py-2 text-sm font-medium transition hover:border-cyan/70 hover:text-cyan">
           Resume
         </Link>
+        </div>
       </Container>
     </header>
   );
@@ -65,28 +73,21 @@ export const SectionLabel = ({ children }: { children: React.ReactNode }) => (
 
 function HeroSystemVisual() {
   return (
-    <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-      <div className="absolute -inset-8 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(56,189,248,.12),transparent_62%)] blur-2xl" />
-      <div className="rounded-3xl border border-line bg-panel/90 p-8 shadow-soft sm:p-10">
-        <div className="flex flex-col items-center gap-2.5">
-          <div className="flex gap-2.5">
-            <div className="flow-tier-chip">Web</div>
-            <div className="flow-tier-chip">Mobile</div>
-          </div>
-          <span className="flow-connector" />
-          <div className="flow-tier-chip flow-tier-chip--accent">API</div>
-          <span className="flow-connector" />
-          <div className="flow-tier-chip">Data + Auth</div>
-          <span className="flow-connector" />
-          <div className="flex flex-wrap justify-center gap-2.5">
-            <div className="flow-tier-chip flow-tier-chip--small">Payments</div>
-            <div className="flow-tier-chip flow-tier-chip--small">Offline</div>
-            <div className="flow-tier-chip flow-tier-chip--small">POS</div>
-          </div>
-        </div>
-        <div className="mt-8 border-t border-white/5 pt-5 text-center font-mono text-[10px] uppercase tracking-[.18em] text-dim">
-          Full-stack product systems
-        </div>
+    <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
+      <div className="absolute -inset-8 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(56,189,248,.14),transparent_62%)] blur-2xl" />
+      <div className="grid grid-cols-6 grid-rows-[auto_auto] gap-3">
+        <Link href="/projects/findxny-os" className="group relative col-span-6 aspect-[8/5] overflow-hidden rounded-2xl border border-line bg-panel shadow-soft transition hover:-translate-y-1 hover:border-cyan/50">
+          <Image src="/projects/findxny-os/pos-hero-mockup.jpg" alt="Illustrative mockup of the FINDXNY OS point-of-sale ecosystem: cashier terminal, kitchen display, payment screen and receipt printer" fill priority className="object-cover" sizes="(min-width: 1024px) 45vw, 100vw" />
+          <span className="absolute bottom-3 left-3 rounded-full bg-ink/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[.16em] text-cyan backdrop-blur">FINDXNY OS · POS · Illustrative</span>
+        </Link>
+        <Link href="/projects/lalaba" className="group relative col-span-3 aspect-[877/900] overflow-hidden rounded-2xl border border-line bg-panel shadow-soft transition hover:-translate-y-1 hover:border-cyan/50">
+          <Image src="/projects/lalaba/customer-app.jpg" alt="Lalaba customer mobile app" fill className="object-cover" sizes="(min-width: 1024px) 22vw, 50vw" />
+          <span className="absolute bottom-3 left-3 rounded-full bg-ink/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[.16em] text-cyan backdrop-blur">Lalaba · Mobile</span>
+        </Link>
+        <Link href="/projects/findxny-os" className="group relative col-span-3 aspect-[877/900] overflow-hidden rounded-2xl border border-line bg-panel shadow-soft transition hover:-translate-y-1 hover:border-cyan/50">
+          <Image src="/projects/findxny-os/pos-dashboard.jpg" alt="FINDXNY OS owner dashboard" fill className="object-cover object-left" sizes="(min-width: 1024px) 22vw, 50vw" />
+          <span className="absolute bottom-3 left-3 rounded-full bg-ink/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[.16em] text-cyan backdrop-blur">Dashboard</span>
+        </Link>
       </div>
     </div>
   );
@@ -94,7 +95,7 @@ function HeroSystemVisual() {
 
 export function Hero() {
   return (
-    <section className="grid-bg border-b border-white/5 py-20 sm:py-24 lg:py-28">
+    <section className="grid-bg overflow-x-clip border-b border-white/5 py-20 sm:py-24 lg:py-28">
       <Container>
         <div className="grid items-center gap-14 lg:grid-cols-[1.08fr_.92fr] lg:gap-12">
           <div>
@@ -187,8 +188,9 @@ export function SelectedWork() {
                     </div>
                   </div>
                 )}
-                <div className="mt-8">
+                <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
                   <Link className="inline-flex items-center gap-2 text-sm font-semibold text-cyan transition group-hover:gap-3" href={`/projects/${p.slug}`}>Explore case study <ArrowRight size={16} /></Link>
+                  <DocLink slug={p.slug} variant="inline" />
                 </div>
               </div>
             );
@@ -236,6 +238,23 @@ export function SelectedWork() {
   );
 }
 
+export function Automations() {
+  return (
+    <section id="automations" className="section-anchor border-y border-white/5 bg-panel/40 py-20 sm:py-24 lg:py-28">
+      <Container>
+        <SectionLabel>Automation systems</SectionLabel>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <h2 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Automating the work around the product.</h2>
+          <p className="max-w-xl text-sm leading-6 text-muted-bright lg:text-right">Workflows and AI assistants, documented by trigger, flow, safeguards, and limits. Each one is labelled with its real status. <Link href="/automations" className="text-cyan underline underline-offset-2">See all automations</Link>.</p>
+        </div>
+        <div className="mt-12 space-y-6">
+          {automations.map((a) => <AutomationCard key={a.slug} a={a} />)}
+        </div>
+      </Container>
+    </section>
+  );
+}
+
 export function Capabilities() {
   const groups = [
     { name: "Product Engineering", statement: "Web and mobile interfaces built around actual operational workflows, not demo UI.", tech: ["Next.js", "React Native", "Expo"] },
@@ -266,20 +285,7 @@ export function Capabilities() {
 }
 
 export function Experience() {
-  const items = [
-    {
-      date: "May 2025 – Jul 2026",
-      org: "FINDXNY",
-      role: "Junior Full-Stack Engineer",
-      projects: [
-        { name: "FINDXNY OS", period: "May 2026 – Jul 2026" },
-        { name: "Lalaba", period: "Oct 2025 – Aug 2026" },
-        { name: "Athlete Central", period: "May 2025 – Sept 2025" },
-      ],
-    },
-    { date: "Apr 2021 – Apr 2025", org: "Department of Education", role: "Special Science Teacher I", projects: null },
-    { date: "Dec 2019 – Mar 2021", org: "Iraseth Pharma Inc.", role: "Biomedical Engineer", projects: null },
-  ];
+  const items = EXPERIENCE;
   return (
     <section id="experience" className="section-anchor py-20 sm:py-24 lg:py-28">
       <Container>
@@ -320,9 +326,10 @@ export function Contact() {
           <div>
             <SectionLabel>Contact</SectionLabel>
             <h2 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Open to Full-Stack, Backend, and Product Engineering opportunities.</h2>
-            <p className="mt-4 max-w-2xl text-muted-bright">For engineering roles, project discussions, or technical collaboration, email is the fastest way to reach me.</p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <a href="mailto:pgandollas@gmail.com?subject=Engineering%20Opportunity" className="inline-flex items-center gap-2 rounded-full bg-text px-5 py-3 text-sm font-semibold text-ink transition hover:-translate-y-0.5"><Mail size={16} />Email Prince</a>
+            <p className="mt-4 max-w-2xl text-muted-bright">Send a message about a role, project, or collaboration — you&apos;ll get an automatic confirmation, and I reply within 1–2 business days.</p>
+            <div className="mt-7 max-w-2xl"><ContactForm /></div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a href="mailto:pgandollas@gmail.com?subject=Engineering%20Opportunity" className="inline-flex items-center gap-2 rounded-full bg-text px-5 py-3 text-sm font-semibold text-ink transition hover:-translate-y-0.5"><Mail size={16} />Email directly</a>
               <a href="https://linkedin.com/in/pjdevph" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3 text-sm font-semibold transition hover:border-cyan/70 hover:text-cyan">LinkedIn <ExternalLink size={15} /></a>
               <a href="https://github.com/pjDevph" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3 text-sm font-semibold transition hover:border-cyan/70 hover:text-cyan">GitHub <ExternalLink size={15} /></a>
             </div>
@@ -331,7 +338,8 @@ export function Contact() {
             <div className="font-mono text-[11px] uppercase tracking-[.16em] text-dim">Availability</div>
             <div className="mt-4 space-y-4 text-sm">
               <div><div className="text-dim">Location</div><div className="mt-1 text-muted-bright">Binangonan, Rizal, Philippines</div></div>
-              <div><div className="text-dim">Preferred contact</div><div className="mt-1 text-muted-bright">Email · LinkedIn</div></div>
+              <div><div className="text-dim">Preferred contact</div><div className="mt-1 text-muted-bright">Email · Phone · LinkedIn</div></div>
+              <div><div className="text-dim">Phone</div><div className="mt-1"><a href={PROFILE.phoneHref} className="text-muted-bright underline underline-offset-2 hover:text-text">{PROFILE.phone}</a></div></div>
               <div><div className="text-dim">Focus</div><div className="mt-1 text-muted-bright">Full-Stack · Backend · Product Engineering</div></div>
             </div>
           </div>
