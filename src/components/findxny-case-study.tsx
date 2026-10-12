@@ -6,6 +6,8 @@ import Image from "next/image";
 import { ShotGallery } from "@/components/lightbox";
 import { DocLink } from "@/components/doc-link";
 import { FlowCurrent } from "@/components/flow-current";
+import { SystemMap } from "@/components/system-map";
+import { FINDXNY_MAP } from "@/data/system-maps";
 import { FINDXNY_DETAILS } from "@/data/project-details";
 import {
   ArrowLeft,
@@ -270,43 +272,7 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
           <Container>
             <SectionLabel>System architecture</SectionLabel>
             <h2 className="text-3xl font-bold">How the pieces talk to each other</h2>
-            <div className="mt-8 space-y-3">
-              <div className="arch-tier">
-                <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Client surfaces</div>
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <div className="arch-node">Customer Web (Next.js)</div>
-                  <div className="arch-node">Admin Web (Next.js)</div>
-                  <div className="arch-node">POS + Kitchen (Expo)</div>
-                </div>
-              </div>
-              <div className="arch-arrow py-1">↓ business rules never run on the client</div>
-              <div className="arch-tier">
-                <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Application layer</div>
-                <div className="arch-node cyan">115 Deno Edge Functions — auth · catalog · orders · bookings · payments · staff · reports</div>
-              </div>
-              <div className="arch-arrow py-1">↓</div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="arch-tier">
-                  <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Data & auth</div>
-                  <div className="space-y-2">
-                    <div className="arch-node">Supabase Auth</div>
-                    <div className="arch-node">PostgreSQL — 56 tables, RLS</div>
-                  </div>
-                </div>
-                <div className="arch-tier">
-                  <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">External & hardware</div>
-                  <div className="space-y-2">
-                    <div className="arch-node">Xendit Invoice API + webhooks</div>
-                    <div className="arch-node">ESC/POS · IMIN printer · cash drawer</div>
-                  </div>
-                </div>
-              </div>
-              <div className="arch-tier">
-                <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Offline layer (POS only)</div>
-                <div className="arch-node">Local SQLite queue (orders/payments/shift actions) → idempotency key → server reconciliation</div>
-              </div>
-            </div>
-            <p className="mt-4 text-xs text-dim">There is no local Supabase/Docker stack — dev, staging, and production are all real deployed Supabase projects (per the repo README).</p>
+            <div className="mt-14"><SystemMap data={FINDXNY_MAP} ariaLabel="End-to-end architecture: Next.js web apps and the Expo POS call Deno Edge Functions, which use Supabase Auth, PostgreSQL, Xendit and the POS hardware." /></div>
           </Container>
         </section>
 

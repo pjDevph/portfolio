@@ -3,6 +3,8 @@ import { ProjectPoster } from "@/components/poster-placeholder";
 import { ProductCarousel } from "@/components/product-carousel";
 import { DocLink } from "@/components/doc-link";
 import { FlowCurrent } from "@/components/flow-current";
+import { SystemMap } from "@/components/system-map";
+import { LALABA_MAP } from "@/data/system-maps";
 import { LALABA_DETAILS } from "@/data/project-details";
 import { LALABA_SLIDES } from "@/data/lalaba-slides";
 import type { Project } from "@/data/projects";
@@ -228,39 +230,7 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
           <Container>
             <SectionLabel>System architecture</SectionLabel>
             <h2 className="text-3xl font-bold">One backend behind every client</h2>
-            <div className="mt-8 space-y-3">
-              <div className="arch-tier">
-                <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Client surfaces</div>
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <div className="arch-node">Customer App (Expo)</div>
-                  <div className="arch-node">Partner App (Expo)</div>
-                  <div className="arch-node">Admin Panel (Next.js)</div>
-                </div>
-              </div>
-              <div className="arch-arrow py-1">↓ GraphQL</div>
-              <div className="arch-tier">
-                <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Application layer</div>
-                <div className="arch-node cyan">NestJS + Apollo GraphQL — 187 modules, 57 resolvers</div>
-              </div>
-              <div className="arch-arrow py-1">↓</div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="arch-tier">
-                  <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Data & cache</div>
-                  <div className="space-y-2">
-                    <div className="arch-node">MongoDB — 68 Mongoose schemas</div>
-                    <div className="arch-node">Redis (ioredis) — rate limiting</div>
-                  </div>
-                </div>
-                <div className="arch-tier">
-                  <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">External</div>
-                  <div className="space-y-2">
-                    <div className="arch-node">Firebase Auth / App Check / Messaging</div>
-                    <div className="arch-node">Xendit invoice + webhook</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p className="mt-4 text-xs text-dim">The marketing website is deliberately unwired — its own repo, no API/auth/payment connection to the platform above.</p>
+            <div className="mt-14"><SystemMap data={LALABA_MAP} ariaLabel="End-to-end architecture: Expo customer and partner apps and the Next.js admin panel call a NestJS GraphQL API, which uses MongoDB, Redis, Firebase and Xendit." /></div>
           </Container>
         </section>
 

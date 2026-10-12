@@ -6,8 +6,10 @@ import { StatusPill, STATUS_STYLE, type Status } from "@/components/status-pill"
 import type { Project } from "@/data/projects";
 import { ATHLETE_DETAILS, ATHLETE_ARCHITECTURE } from "@/data/project-details";
 import { FlowCurrent } from "@/components/flow-current";
+import { SystemMap } from "@/components/system-map";
+import { ATHLETE_MAP } from "@/data/system-maps";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, CheckCircle2, Monitor, Smartphone, Store, LayoutDashboard } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
 
 const SUBNAV = [
   ["overview", "Overview"],
@@ -21,9 +23,6 @@ const SUBNAV = [
 // or "Planned" items to FEATURE_GROUPS (or the roadmap) once they are confirmed.
 
 const FEATURE_GROUPS = ATHLETE_DETAILS.featureGroups;
-
-const CLIENT_ICONS: Record<string, typeof Monitor> = { "Customer Web": Monitor, "Customer Mobile": Smartphone, "Android POS": Store, "Admin Desktop": LayoutDashboard };
-const CLIENTS = ATHLETE_DETAILS.clients.map((c) => ({ ...c, icon: CLIENT_ICONS[c.name] }));
 
 const CHALLENGES = ATHLETE_DETAILS.challenges;
 
@@ -125,39 +124,7 @@ export function AthleteCentralCaseStudy({ project }: { project: Project }) {
             <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-bright">
               The shared Cloud Functions layer owns booking, availability, and pricing rules, so no client re-implements them.
             </p>
-            <figure className="mt-8" aria-label="Architecture diagram: four client applications call shared Firebase Cloud Functions, which read and write Firestore and use Firebase Auth.">
-              <div className="space-y-3">
-                <div className="arch-tier">
-                  <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Client applications</div>
-                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                    {CLIENTS.map((c) => (
-                      <div key={c.name} className="arch-node flex flex-col items-center gap-1.5">
-                        <c.icon size={16} className="text-cyan" aria-hidden="true" />
-                        <span className="font-medium">{c.name}</span>
-                        <span className="font-mono text-[10px] text-dim">{c.tag}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="arch-arrow py-1">↓ every client calls the same functions</div>
-                <div className="arch-tier">
-                  <div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Shared booking backend · Firebase Cloud Functions</div>
-                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                    <div className="arch-node cyan">Availability &amp; slot rules</div>
-                    <div className="arch-node cyan">Pricing rules</div>
-                    <div className="arch-node cyan">Booking lifecycle</div>
-                    <div className="arch-node cyan">Payment lifecycle</div>
-                  </div>
-                  <p className="mt-3 text-center font-mono text-[10px] text-dim">booking and payment state are modeled separately, then linked explicitly</p>
-                </div>
-                <div className="arch-arrow py-1">↓</div>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="arch-tier"><div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Identity</div><div className="arch-node">Firebase Auth</div></div>
-                  <div className="arch-tier"><div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">Data</div><div className="arch-node">Firestore</div></div>
-                </div>
-              </div>
-              <figcaption className="mt-4 text-xs text-dim">Architecture as described in the project record. Per-client feature depth is not itemized on this page.</figcaption>
-            </figure>
+            <div className="mt-14"><SystemMap data={ATHLETE_MAP} ariaLabel="End-to-end architecture: four client applications call shared Firebase Cloud Functions, which read and write Firestore and use Firebase Auth." /></div>
             <div className="mt-8"><div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">How a request moves through the system</div><FlowCurrent ariaLabel="Request path through the Athlete Central architecture, tier by tier" steps={ATHLETE_ARCHITECTURE.tiers.map((t) => ({ label: t.title, text: t.nodes.join(" · ") }))} /></div>
             <div className="mt-8 flex flex-wrap gap-2">
               {project.stack.map((s) => (
