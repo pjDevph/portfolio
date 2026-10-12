@@ -4,7 +4,8 @@ import { CaseSubNav } from "@/components/case-subnav";
 import { DocLink } from "@/components/doc-link";
 import { StatusPill, STATUS_STYLE, type Status } from "@/components/status-pill";
 import type { Project } from "@/data/projects";
-import { ATHLETE_DETAILS } from "@/data/project-details";
+import { ATHLETE_DETAILS, ATHLETE_ARCHITECTURE } from "@/data/project-details";
+import { FlowCurrent } from "@/components/flow-current";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Monitor, Smartphone, Store, LayoutDashboard } from "lucide-react";
 
@@ -157,6 +158,7 @@ export function AthleteCentralCaseStudy({ project }: { project: Project }) {
               </div>
               <figcaption className="mt-4 text-xs text-dim">Architecture as described in the project record. Per-client feature depth is not itemized on this page.</figcaption>
             </figure>
+            <div className="mt-8"><div className="mb-3 font-mono text-[10px] uppercase tracking-[.18em] text-dim">How a request moves through the system</div><FlowCurrent ariaLabel="Request path through the Athlete Central architecture, tier by tier" steps={ATHLETE_ARCHITECTURE.tiers.map((t) => ({ label: t.title, text: t.nodes.join(" · ") }))} /></div>
             <div className="mt-8 flex flex-wrap gap-2">
               {project.stack.map((s) => (
                 <span key={s} className="rounded-full border border-line bg-panel px-3 py-1.5 font-mono text-xs text-muted">{s}</span>

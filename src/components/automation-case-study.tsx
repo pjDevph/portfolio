@@ -4,6 +4,7 @@ import { StatusPill, STATUS_STYLE, type Status } from "@/components/status-pill"
 import { AssistantChat } from "@/components/assistant-chat";
 import { ShotGallery } from "@/components/lightbox";
 import { DocLink } from "@/components/doc-link";
+import { FlowCurrent } from "@/components/flow-current";
 import type { Automation } from "@/data/automations";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Zap } from "lucide-react";
@@ -92,17 +93,7 @@ export function AutomationCaseStudy({ automation: a }: { automation: Automation 
                 </div>
               </figure>
             )}
-            <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {a.flow.map((s, i) => (
-                <li key={s.label} className="arch-tier">
-                  <div className="flex items-center gap-2.5">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-cyan/40 bg-cyan/10 font-mono text-[11px] text-cyan" aria-hidden="true">{i + 1}</span>
-                    <span className="text-sm font-semibold">{s.label}</span>
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-muted-bright">{s.detail}</p>
-                </li>
-              ))}
-            </ol>
+            <div className="mt-8"><FlowCurrent ariaLabel="How the automation works, step by step" steps={a.flow.map((s) => ({ label: s.label, text: s.detail }))} /></div>
             <div className="mt-8 flex flex-wrap gap-2">
               {a.stack.map((t) => <span key={t} className="rounded-full border border-line bg-panel px-3 py-1.5 font-mono text-xs text-muted">{t}</span>)}
             </div>

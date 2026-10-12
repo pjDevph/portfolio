@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShotGallery } from "@/components/lightbox";
 import { DocLink } from "@/components/doc-link";
+import { FlowCurrent } from "@/components/flow-current";
 import { FINDXNY_DETAILS } from "@/data/project-details";
 import {
   ArrowLeft,
@@ -375,14 +376,7 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
               <div>
                 <div className="flex items-center gap-2"><WifiOff size={16} className="text-cyan" /><SectionLabel>Offline-first architecture</SectionLabel></div>
                 <h2 className="text-3xl font-bold">Cashiers keep working when the network doesn&apos;t</h2>
-                <div className="mt-6 space-y-3">
-                  {OFFLINE_FLOW.map((step, i) => (
-                    <div key={step} className="flow-step">
-                      <div className="flow-step-index">{String(i + 1).padStart(2, "0")}</div>
-                      <div className="mt-1.5 text-sm leading-5 text-muted-bright">{step}</div>
-                    </div>
-                  ))}
-                </div>
+                <div className="mt-6"><FlowCurrent ariaLabel="Offline order sync, step by step" steps={OFFLINE_FLOW.map((text) => ({ text }))} /></div>
               </div>
             </div>
           </Container>
@@ -397,14 +391,7 @@ export function FindxnyCaseStudy({ project }: { project: Project }) {
               <div className="lg:order-1">
                 <div className="flex items-center gap-2"><CreditCard size={16} className="text-cyan" /><SectionLabel>Payments & webhooks</SectionLabel></div>
                 <h2 className="text-3xl font-bold">Server-authoritative, idempotent by design</h2>
-                <div className="mt-6 space-y-3">
-                  {PAYMENT_FLOW.map((step, i) => (
-                    <div key={step} className="flow-step">
-                      <div className="flow-step-index">{String(i + 1).padStart(2, "0")}</div>
-                      <div className="mt-1.5 text-sm leading-5 text-muted-bright">{step}</div>
-                    </div>
-                  ))}
-                </div>
+                <div className="mt-6"><FlowCurrent ariaLabel="Payment and webhook flow, step by step" steps={PAYMENT_FLOW.map((text) => ({ text }))} /></div>
               </div>
             </div>
           </Container>

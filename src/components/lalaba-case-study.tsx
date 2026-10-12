@@ -2,6 +2,7 @@ import { Container, Header, Footer, SectionLabel } from "@/components/site";
 import { ProjectPoster } from "@/components/poster-placeholder";
 import { ProductCarousel } from "@/components/product-carousel";
 import { DocLink } from "@/components/doc-link";
+import { FlowCurrent } from "@/components/flow-current";
 import { LALABA_DETAILS } from "@/data/project-details";
 import { LALABA_SLIDES } from "@/data/lalaba-slides";
 import type { Project } from "@/data/projects";
@@ -301,14 +302,7 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
           <Container>
             <div className="flex items-center gap-2"><ShieldCheck size={16} className="text-cyan" /><SectionLabel>Branch-scoped device approval</SectionLabel></div>
             <h2 className="text-3xl font-bold">A device is either approved, or it isn&apos;t — no in-between</h2>
-            <div className="mt-8 flex flex-wrap items-stretch gap-3">
-              {DEVICE_FLOW.map((step, i) => (
-                <div key={step} className="flow-step">
-                  <div className="flow-step-index">{String(i + 1).padStart(2, "0")}</div>
-                  <div className="mt-1.5 text-sm leading-5 text-muted-bright">{step}</div>
-                </div>
-              ))}
-            </div>
+            <div className="mt-8"><FlowCurrent ariaLabel="Device approval flow, step by step" steps={DEVICE_FLOW.map((text) => ({ text }))} /></div>
           </Container>
         </section>
 
@@ -316,14 +310,7 @@ export function LalabaCaseStudy({ project }: { project: Project }) {
           <Container>
             <div className="flex items-center gap-2"><Wallet size={16} className="text-cyan" /><SectionLabel>Wallet & payments</SectionLabel></div>
             <h2 className="text-3xl font-bold">A webhook that can only ever credit once</h2>
-            <div className="mt-8 flex flex-wrap items-stretch gap-3">
-              {PAYMENT_FLOW.map((step, i) => (
-                <div key={step} className="flow-step">
-                  <div className="flow-step-index">{String(i + 1).padStart(2, "0")}</div>
-                  <div className="mt-1.5 text-sm leading-5 text-muted-bright">{step}</div>
-                </div>
-              ))}
-            </div>
+            <div className="mt-8"><FlowCurrent ariaLabel="Wallet top-up and webhook flow, step by step" steps={PAYMENT_FLOW.map((text) => ({ text }))} /></div>
           </Container>
         </section>
 

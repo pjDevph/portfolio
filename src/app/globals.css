@@ -133,6 +133,19 @@ a { color: inherit; text-decoration: none; }
 .browser-frame-bar { display: flex; align-items: center; gap: .5rem; padding: .6rem .85rem; border-bottom: 1px solid #243044; background: #0F1623; }
 .browser-dot { width: 8px; height: 8px; border-radius: 999px; background: #243044; }
 .browser-url { flex: 1; margin-left: .5rem; border-radius: .5rem; background: rgba(0,0,0,.25); padding: .3rem .7rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: #94A3B8; }
+.flow-cur { list-style: none; margin: 0; padding: 0; }
+.flow-cur-item { position: relative; padding: 0 0 .9rem 3rem; }
+.flow-cur-item:last-child { padding-bottom: 0; }
+.flow-cur-node { position: absolute; left: 0; top: .55rem; width: 2rem; height: 2rem; border-radius: 999px; border: 1px solid #243044; background: #0F1623; color: #7A8BA6; display: flex; align-items: center; justify-content: center; font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; transition: border-color .3s, color .3s, box-shadow .3s; z-index: 1; }
+.flow-cur-item:not(:last-child)::before { content: ""; position: absolute; left: calc(1rem - 1px); top: 2.6rem; bottom: -.15rem; width: 2px; background: #243044; }
+.flow-cur-item[data-flowing]::after { content: ""; position: absolute; left: calc(1rem - 3px); top: 2.6rem; width: 6px; height: 14px; border-radius: 6px; background: linear-gradient(#38BDF8, rgba(56,189,248,0)); box-shadow: 0 0 10px #38BDF8; animation: flow-cur-run 1.4s linear forwards; }
+@keyframes flow-cur-run { from { top: 2.6rem; opacity: 1; } to { top: calc(100% - .2rem); opacity: .2; } }
+.flow-cur-card { border: 1px solid #243044; border-radius: .9rem; background: rgba(20,28,42,.7); padding: .85rem 1rem; transition: border-color .3s, box-shadow .3s, background .3s; }
+.flow-cur-item[data-on="done"] .flow-cur-node { border-color: rgba(56,189,248,.45); color: #38BDF8; }
+.flow-cur-item[data-on="now"] .flow-cur-node { border-color: #38BDF8; color: #38BDF8; box-shadow: 0 0 0 4px rgba(56,189,248,.15); }
+.flow-cur-item[data-on="now"] .flow-cur-card { border-color: rgba(56,189,248,.6); background: rgba(56,189,248,.07); box-shadow: 0 0 24px rgba(56,189,248,.12); }
+.flow-cur-pause { margin-bottom: .75rem; border: 1px solid #243044; border-radius: 999px; padding: .25rem .8rem; font: 11px ui-monospace, SFMono-Regular, Menlo, monospace; color: #94A3B8; background: transparent; cursor: pointer; }
+.flow-cur-pause:hover { color: #F8FAFC; border-color: rgba(56,189,248,.5); }
 .erd-entity { border: 1px solid #243044; border-radius: .85rem; background: rgba(20,28,42,.7); padding: .85rem 1rem; }
 .erd-entity-name { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; letter-spacing: .1em; color: #38BDF8; }
 @media (prefers-reduced-motion: reduce) {
