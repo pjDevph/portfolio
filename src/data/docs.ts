@@ -161,6 +161,7 @@ function findxnyDoc() {
   const d = FINDXNY_DETAILS;
   return productDoc("findxny-os", {
     platform: "Web · POS · Backend · Hardware",
+    teamNote: "Solo build: sole developer across web, POS app and backend",
     architecture: FINDXNY_ARCHITECTURE,
     surfaces: d.surfaces,
     stackGroups: d.stackGroups,
@@ -205,6 +206,7 @@ function athleteDoc() {
   const d = ATHLETE_DETAILS;
   const doc = productDoc("athlete-central", {
     platform: "Web · Mobile · POS · Admin",
+    teamNote: "Solo build: sole developer across all clients and the backend",
     architecture: ATHLETE_ARCHITECTURE,
     surfaces: d.clients.map((c) => ({ name: c.name, tag: c.tag, desc: "A client of the shared Firebase Cloud Functions backend.", points: [] })),
     limits: [

@@ -34,7 +34,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     date: "May 2025 – Sept 2026",
     org: "FINDXNY",
     role: "Junior Full-Stack Engineer",
-    detail: "Delivered three client platforms end to end across web, mobile and backend, as part of a small engineering team.",
+    detail: "Delivered three client platforms end to end across web, mobile and backend: FINDXNY OS and Athlete Central as the sole developer, Lalaba within a small engineering team.",
     projects: [
       { name: "FINDXNY OS", client: "MugTheMug", period: "May 2026 – Sept 2026" },
       { name: "Lalaba", client: "Lalaba", period: "Oct 2025 – Aug 2026" },

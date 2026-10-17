@@ -1,7 +1,7 @@
 {
   "findxny-os": {
     "file": "findxny-os-documentation.pdf",
-    "hash": "b1f92c3858d7bb72",
+    "hash": "597e3617a845b8a5",
     "pages": 7,
     "kb": 432,
     "generated": "2026-10-17"
@@ -15,16 +15,16 @@
   },
   "athlete-central": {
     "file": "athlete-central-documentation.pdf",
-    "hash": "526ccc873e0ff9f7",
+    "hash": "317f354275d2d9be",
     "pages": 5,
     "kb": 390,
     "generated": "2026-10-17"
   },
   "findxny-sheets-reporting": {
     "file": "findxny-sheets-reporting-documentation.pdf",
-    "hash": "8d91b714ad33fad7",
+    "hash": "d5cb10402c484ab4",
     "pages": 8,
-    "kb": 1287,
+    "kb": 1284,
     "generated": "2026-10-17"
   },
   "portfolio-assistant": {

@@ -61,6 +61,7 @@ function experienceFacts() {
 
 // Facts that live on the project pages rather than in projects.ts.
 const EXTRA_FACTS = `
+- Team context: FINDXNY OS and Athlete Central were solo builds with Prince as the sole developer. FINDXNY OS commits appear under several Git accounts (pgandollas, PJ, FINDXNY, shaepadilla) that all belong to Prince. Lalaba was built with a small engineering team.
 - FINDXNY OS: Mugthemug, a café/restaurant/staycation lounge in Angono, Rizal, has run its public storefront on the platform (mugthemug.ph). Online food ordering and staycation booking were described as paused, with the order/booking tracker available. ${FINDXNY_DETAILS.storefront.live ? "Never claim the storefront is currently online or offline; tell visitors to check the site directly." : "The public storefront is currently offline and its link is disabled on this site; say it is temporarily offline, and never claim it is online."} A redacted public code snapshot is at https://github.com/pjDevph/findxny-os-showcase.
 - Lalaba: the admin panel source showcase is at https://github.com/pjDevph/lalaba-admin-showcase.
 - Athlete Central: only the four capabilities listed in its "What was built" are documented as implemented (multi-facility multi-date cart with slot merging, centralized pricing, booking/payment lifecycle separation, shared Firebase Cloud Functions backend). No traffic, revenue or performance metrics are claimed. Product screenshots are not published yet, only a poster.

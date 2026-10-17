@@ -51,7 +51,7 @@ export const automations: Automation[] = [
       { label: "Solution", text: "A server-side module computes the numbers from authoritative order data and writes them through the Google Sheets API." },
     ],
     role: "Built and maintained the reporting module in the FINDXNY OS backend.",
-    roleShort: "Backend engineer, team project",
+    roleShort: "Solo build",
     contributions: [
       "Wrote a Google service-account client with JWT signing on Web Crypto and raw Sheets calls, because the Deno edge runtime can't use the Node Google client.",
       "Designed the daily aggregation by area (kitchen vs. bar) and three fixed clock windows.",
