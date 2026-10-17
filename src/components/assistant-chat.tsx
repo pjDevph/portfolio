@@ -285,7 +285,7 @@ export function AssistantWidget() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   // The case-study page embeds the same assistant inline, so skip the floating one there.
   const path = usePathname() ?? "";
-  const hidden = path.startsWith("/automations/portfolio-assistant") || path.startsWith("/docs/");
+  const hidden = path.startsWith("/automations/portfolio-assistant") || path.startsWith("/docs/") || path.startsWith("/resume/print");
 
   useEffect(() => {
     if (!open) return;

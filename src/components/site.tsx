@@ -302,10 +302,11 @@ export function Experience() {
                 <div className="font-mono text-xs text-dim">{item.date}</div>
                 <div className="mt-1 text-lg font-semibold">{item.org}</div>
                 <div className="text-sm text-muted-bright">{item.role}</div>
+                <p className="mt-2 max-w-xl text-sm leading-6 text-muted">{item.detail}</p>
                 {item.projects && (
                   <div className="mt-3 flex flex-wrap gap-2">
                     {item.projects.map((p) => (
-                      <span key={p.name} className="rounded-full border border-line bg-panel2 px-3 py-1 font-mono text-xs text-muted-bright" title={p.period}>{p.name}</span>
+                      <span key={p.name} className="rounded-full border border-line bg-panel2 px-3 py-1 font-mono text-xs text-muted-bright" title={`Client: ${p.client} · ${p.period}`}>{p.client === p.name ? p.name : `${p.name} · ${p.client}`}</span>
                     ))}
                   </div>
                 )}

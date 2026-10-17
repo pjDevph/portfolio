@@ -56,7 +56,7 @@ function automationFacts() {
 }
 
 function experienceFacts() {
-  return EXPERIENCE.map((e) => `- ${e.date}: ${e.role} at ${e.org}${e.projects ? ` (projects: ${e.projects.map((p) => `${p.name} ${p.period}`).join("; ")})` : ""}`).join("\n");
+  return EXPERIENCE.map((e) => `- ${e.date}: ${e.role} at ${e.org}. ${e.detail}${e.projects ? ` Client projects: ${e.projects.map((p) => `${p.name} for ${p.client}, ${p.period}`).join("; ")}.` : ""}`).join("\n");
 }
 
 // Facts that live on the project pages rather than in projects.ts.

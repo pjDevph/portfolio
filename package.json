@@ -17,7 +17,8 @@
     "ci": "npm run typecheck && npm run lint && npm run test && npm run check:secrets && npm run check:docs && npm run build && npm run check:secrets && npm run smoke",
     "test:faq": "tsx evals/assistant/faq-coverage.ts",
     "build:docs": "tsx scripts/build-docs.ts",
-    "check:docs": "tsx scripts/check-docs.ts"
+    "check:docs": "tsx scripts/check-docs.ts",
+    "build:resume": "tsx scripts/build-resume.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",

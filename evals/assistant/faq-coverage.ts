@@ -97,7 +97,7 @@ const precise: [string, RegExp[], RegExp[]][] = [
   ["When did he work on Athlete Central?", [/May 2025/, /Sept 2025/], [/Stack:|Platform scale/]],
   ["How many edge functions does FINDXNY OS have?", [/115/, /whole (platform|system)/i], [/Languages & Frontend/]],
   ["What are the main features of Athlete Central?", [/cart/i, /pricing/i], [/Languages & Frontend|NestJS/]],
-  ["most recent project", [/Lalaba/, /FINDXNY OS/], [/Biomedical|Department of Education|Iraseth/]],
+  ["most recent project", [/most recent project is FINDXNY OS/],[/Biomedical|Department of Education|Iraseth/]],
   ["What is his latest project?", [/Lalaba|FINDXNY OS/], [/Biomedical|Iraseth/]],
 ];
 let preciseBad = 0;

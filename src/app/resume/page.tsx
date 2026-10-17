@@ -1,22 +1,64 @@
 import { Container, Footer, Header, SectionLabel } from "@/components/site";
 import { Download } from "lucide-react";
-import { PROFILE } from "@/data/profile";
+import { RESUME, type ResumeRole } from "@/data/resume";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Résumé",
-  description: "Résumé of Prince John Gandollas: Junior Full-Stack Engineer with experience in multi-tenant POS, marketplace, booking, offline-first and payment systems.",
+  description: "Résumé of Prince John Gandollas: Full-Stack Engineer with experience in multi-tenant POS, marketplace, booking, offline-first and payment systems.",
   alternates: { canonical: "/resume" },
 };
 
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return <section className="border-t border-line py-8"><h2 className="text-xl font-semibold">{title}</h2>{children}</section>;
+}
+
+function RoleList({ items }: { items: ResumeRole[] }) {
+  return (
+    <div className="mt-4 space-y-4 text-sm text-muted">
+      {items.map((r) => (
+        <div key={r.title}>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4"><strong className="text-text">{r.title} · {r.org}</strong><span className="font-mono text-xs text-dim">{r.period}</span></div>
+          {r.text && <p className="mt-1 leading-6">{r.text}</p>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function ResumePage() {
+  const r = RESUME;
   return <><Header/><main className="py-16 sm:py-24"><Container><div className="mx-auto max-w-4xl">
     <SectionLabel>Resume</SectionLabel>
-    <div className="border-b border-line pb-8"><div className="flex flex-wrap items-start justify-between gap-4"><div><h1 className="text-4xl font-bold sm:text-5xl">Prince John Gandollas</h1><p className="mt-2 text-lg text-muted">Junior Full-Stack Engineer</p><p className="mt-3 text-sm text-muted">Binangonan, Rizal, Philippines · {PROFILE.phone} · pgandollas@gmail.com</p></div><a href="/Prince_John_Gandollas_Resume.pdf" download className="inline-flex shrink-0 items-center gap-2 rounded-full border border-line px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-cyan/70 hover:text-cyan"><Download size={16}/> Download PDF</a></div></div>
-    <section className="py-8"><h2 className="text-xl font-semibold">Professional Summary</h2><p className="mt-3 leading-7 text-muted">Junior Full-Stack Engineer with 2+ years of hands-on experience building, scaling, and deploying production web and mobile systems. Experience spans multi-tenant POS and booking platforms, marketplace applications, offline-first workflows, RBAC/RLS, payments, APIs, and cloud deployment using TypeScript, Next.js, React Native (Expo), NestJS, Supabase, Firebase, PostgreSQL, MongoDB, and GraphQL.</p></section>
-    <section className="border-t border-line py-8"><h2 className="text-xl font-semibold">Technical Skills</h2><div className="mt-4 grid gap-4 text-sm text-muted sm:grid-cols-2"><p><strong className="text-text">Languages & Frontend:</strong> TypeScript, JavaScript, SQL, HTML5, CSS3, React, Next.js, React Native, Expo, Tailwind CSS</p><p><strong className="text-text">Backend & Data:</strong> Node.js, Express.js, NestJS, Deno, GraphQL, REST APIs, PostgreSQL, SQLite, MongoDB, Supabase, Firebase</p><p><strong className="text-text">Cloud & Delivery:</strong> Google Cloud Platform, Vercel, EAS Build, EAS Update, Git, GitHub, GitHub Actions, Electron</p><p><strong className="text-text">Architecture & Integrations:</strong> Multi-Tenant Architecture, RBAC, RLS, Offline-First Sync, Webhooks, Idempotency, Xendit, Google Maps API, ESC/POS, Custom Expo Modules</p></div></section>
-    <section className="border-t border-line py-8"><h2 className="text-xl font-semibold">Software Engineering Experience</h2><div className="mt-5 space-y-7 text-sm text-muted"><div><h3 className="text-base font-semibold text-text">Junior Full-Stack Engineer · FINDXNY OS</h3><p>May 2026 – Jul 2026</p><p className="mt-2 leading-6">Multi-tenant POS and booking platform across Next.js, Expo, Supabase, PostgreSQL, Deno Edge Functions, Xendit, offline SQLite sync, and ESC/POS integrations.</p></div><div><h3 className="text-base font-semibold text-text">Junior Full-Stack Engineer · Lalaba</h3><p>Oct 2025 – Aug 2026</p><p className="mt-2 leading-6">Multi-role laundry marketplace using NestJS, GraphQL, MongoDB, React Native, Next.js, Firebase, Xendit, Google Maps, and Google Cloud.</p></div><div><h3 className="text-base font-semibold text-text">Junior Full-Stack Engineer · Athlete Central</h3><p>May 2025 – Sept 2025</p><p className="mt-2 leading-6">Sports facility booking platform using Next.js, React Native, Electron, Firebase, TypeScript, and shared scheduling/pricing logic.</p></div></div></section>
-    <section className="border-t border-line py-8"><h2 className="text-xl font-semibold">Additional Experience</h2><div className="mt-4 space-y-4 text-sm text-muted"><p><strong className="text-text">Special Science Teacher I · Department of Education</strong><br/>Apr 2021 – Apr 2025 · Teach programming, web development, Science, and Mathematics.</p><p><strong className="text-text">Biomedical Engineer · Iraseth Pharma Inc.</strong><br/>Dec 2019 – Mar 2021 · Preventive maintenance, troubleshooting, repair, and technical support for biomedical equipment.</p></div></section>
-    <section className="border-t border-line py-8"><h2 className="text-xl font-semibold">Education & Training</h2><div className="mt-4 space-y-2 text-sm text-muted"><p>Bachelor of Science in Electronics Engineering — University of Rizal System, Apr 2019</p><p>Full-Stack Web Development (MERN) — Zuitt Tech Program, Jan–Apr 2025</p></div></section>
+    <div className="pb-8"><div className="flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <h1 className="text-4xl font-bold sm:text-5xl">{r.name}</h1>
+        <p className="mt-2 text-lg text-muted">{r.title}</p>
+        <p className="mt-3 text-sm text-muted">{r.location} · {r.phone} · {r.email}</p>
+        <p className="mt-1 text-sm text-muted">{r.linkedin} · {r.github}</p>
+      </div>
+      <a href="/Prince_John_Gandollas_Resume.pdf" download className="inline-flex shrink-0 items-center gap-2 rounded-full border border-line px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-cyan/70 hover:text-cyan"><Download size={16}/> Download PDF</a>
+    </div></div>
+    <Section title="Professional Summary"><p className="mt-3 leading-7 text-muted">{r.summary}</p></Section>
+    <Section title="Technical Skills">
+      <div className="mt-4 grid gap-4 text-sm text-muted sm:grid-cols-2">
+        {Object.entries(r.skills).map(([group, items]) => <p key={group}><strong className="text-text">{group}:</strong> {items.join(", ")}</p>)}
+      </div>
+    </Section>
+    <Section title="Software Engineering Experience">
+      <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-4"><h3 className="text-base font-semibold text-text">{r.employer.title} · {r.employer.org}</h3><span className="font-mono text-xs text-dim">{r.employer.period}</span></div>
+      <p className="mt-1 text-sm text-muted">{r.employer.text}</p>
+      <div className="mt-5 space-y-6 border-l border-line pl-5 text-sm text-muted">
+        {r.projects.map((p) => (
+          <div key={p.name}>
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4"><h4 className="font-semibold text-text">{p.name}{p.client !== p.name && <span className="font-normal text-muted"> · client: {p.client}</span>}</h4><span className="font-mono text-xs text-dim">{p.period}</span></div>
+            <p className="mt-1 font-mono text-xs text-dim">{p.stack}</p>
+            <ul className="mt-2 list-disc space-y-1.5 pl-5 leading-6">{p.bullets.map((b) => <li key={b}>{b}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </Section>
+    <Section title="Additional Experience"><RoleList items={r.additional}/></Section>
+    <Section title="Education & Training"><RoleList items={r.education}/></Section>
   </div></Container></main><Footer/></>;
 }
